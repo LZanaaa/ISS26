@@ -6,6 +6,7 @@
 <!--
     <script type="text/javascript" src="../css/issStyle.js"></script>
 -->
+<script type="text/javascript" src="./scripts/update.js"></script>
     
 </head>
    
@@ -46,36 +47,14 @@ R2: L’utente umano deve poter:
 <h2>Requirement analysis</h2>
 X cell dopo aver parlato col committente, abbiamo formalizzato il seguente modello:<br>
 
-<code>
-    public interface ICell {
-    
-    // _-- PRIMITIVE --- --> Ottenute conoscendo strutturalmete la cella e le sue proprietà
-	void setStatus(boolean status); //Permette di impostare lo stato della cella (viva o morta).
-	boolean isAlive(); //Proprietà della cella, una volta invocata determina lo stato della cella.
-
-    // -- NON PRIMITIVE --- --> Ottenute senza dover conoscere la struttura della cella e le sue proprietà, ma solo invocando i metodi della cella
-	void switchCellStatus(); //Permette di modificare lo stato della cella (da viva a morta o viceversa)
-	
-    }
-</code>
+<pre><code class="language-java" id="code-icell" data-src="https://raw.githubusercontent.com/LZanaaa/ISS26/refs/heads/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/ICell.java">
+    load
+</code></pre>
 La grigia desritta dal componente è a due dimensioni, a righe e colonne, in numero naturale (da descrivere con un TestPlan >0 ):<br>
 
-<code>
-
-    public interface IGrid {    
-        
-        // --- PRIMITIVE --- 
-        int getRighe();  //Ottengo il numero naturale di righe della griglia  
-        int getColonne(); //Ottengo il numero naturale di colonne della griglia
-        ICell getCell(int r, int c);  //Ottengo la cella alla posizione riga r e colonna c della griglia
-
-        // --- NON PRIMITIVE ---
-        boolean getCellState(int r, int c);   
-        void setCell(int r, int c, boolean stato);    
-        void reset(); //Riporta tutte le celle a stato morto 
-    }
-
-</code>
+<pre><code class="language-java" id="code-igrid" data-src="https://raw.githubusercontent.com/LZanaaa/ISS26/refs/heads/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/IGrid.java">
+    load
+</code></pre>
  
 
 

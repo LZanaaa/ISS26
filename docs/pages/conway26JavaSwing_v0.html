@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="css/mystyle.css">
+<!--
+    <script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+    
+</head>
+   
+<title>conway26JavaSwing_v0</title></head>
+    
+
+<body>
+<div id="top">
+<h1>ConwayLife Sprint2</h1>
+</div>  
+
+<div class="body">  
+
+<h2>Introduction</h2>
+<b>Goal</b>: dotare il 
+<a href='https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#chapter.6'>GAME OF LIFE DI CONWAY</a>
+di una interfaccia grafica di interazione con l'utente, per realizzare il <b>requisito R2</b>.
+ 
+<h2>Requirements</h2>
+
+ 
+<!-- <div class="remark"> -->
+<pre>
+R1: Realizzare una versione in Java del gioco Life di Conway, come gioco zero-player. 
+    Il gioco consiste nell’introdurre una Griglia di Celle il cui stato (cella ‘viva’ o cella ‘morta’) 
+    evolve come stabilito dallle regole di ConwayLife
+
+R2: L’utente umano deve poter:
+     - specificare la configurazione iniziale della griglia del gioco	
+     - vedere l’evoluzione del gioco in forma opportuna 
+        (si veda <a href='https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#section.6.3'>Problema della vista del gioco</a> )
+     - fermare e far ripartire l’evoluzione del gioco
+     - pulire (a gioco fermo) la configurazione della griglia del gioco
+
+</pre>
+  
+
+<h2>Requirement analysis</h2>
+X cell dopo aver parlato col committente, abbiamo formalizzato il seguente modello:<br>
+
+<code>
+    public interface ICell {
+    
+    // _-- PRIMITIVE --- --> Ottenute conoscendo strutturalmete la cella e le sue proprietà
+	void setStatus(boolean status); //Permette di impostare lo stato della cella (viva o morta).
+	boolean isAlive(); //Proprietà della cella, una volta invocata determina lo stato della cella.
+
+    // -- NON PRIMITIVE --- --> Ottenute senza dover conoscere la struttura della cella e le sue proprietà, ma solo invocando i metodi della cella
+	void switchCellStatus(); //Permette di modificare lo stato della cella (da viva a morta o viceversa)
+	
+    }
+</code>
+La grigia desritta dal componente è a due dimensioni, a righe e colonne, in numero naturale (da descrivere con un TestPlan >0 ):<br>
+
+<code>
+
+    public interface IGrid {    
+        
+        // --- PRIMITIVE --- 
+        int getRighe();  //Ottengo il numero naturale di righe della griglia  
+        int getColonne(); //Ottengo il numero naturale di colonne della griglia
+        ICell getCell(int r, int c);  //Ottengo la cella alla posizione riga r e colonna c della griglia
+
+        // --- NON PRIMITIVE ---
+        boolean getCellState(int r, int c);   
+        void setCell(int r, int c, boolean stato);    
+        void reset(); //Riporta tutte le celle a stato morto 
+    }
+
+</code>
+ 
+
+
+<h2>Problem analysis</h2>
+ 
+
+<h2>Test plans</h2> 
+
+
+<h2>Project</h2> 
+ 
+ 
+
+<h2>Testing</h2> 
+ 
+
+<h2>Deployment</h2> 
+
+ 
+<h2>Maintenance</h2> 
+ 
+<!-- USEFUL
+<table style="width:100%" border="1">
+<tr>
+<td style="width:50%">
+</td>
+<td></td>
+</tr>
+</table>
+-->
+	      	
+<br/><br/> 	
+</div>  
+
+<div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
+By Luca Zanarini email: luca.zanarini2@studio.unibo.it, 
+<img src="./LZana.jpg" alt="foto" width="8%" height="8%">
+GIT repo: https://github.com/LZanaaa/ISS26
+</div> 
+</body>
+</html>

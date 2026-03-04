@@ -1,11 +1,27 @@
-package test.java.conway.domain;
+package main.java.test;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.*;
 import org.junit.jupiter.api.Test;
-import main.java.conway.domain.Cell;
+import main.java.conway.domain.Cell; 
 import main.java.conway.domain.ICell;
 
 class CellTest {
+	
+	ICell cell;
+	
+	@Before
+	public void setup() {
+		System.out.println("ConwayLifeTest | setup");	
+	    cell = new Cell();
+	}
+	@After
+	public void down() {
+		System.out.println("ConwayLifeTest | down");
+	}
 
     @Test
     void testStatoIniziale() {
@@ -19,7 +35,7 @@ class CellTest {
         ICell cell = new Cell();
         
         // Test attivazione
-        cell.setStatus(true); //
+        cell.setStatus(true); 
         assertTrue(cell.isAlive());
         
         // Test disattivazione

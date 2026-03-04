@@ -14,7 +14,7 @@ java {
 repositories {
     mavenCentral()
     flatDir {   dirs './libs'    }
-    flatDir {   dirs '../../../unibolibs'    }
+    flatDir {   dirs '../../unibolibs'    }
 }
 
 dependencies {
@@ -49,7 +49,7 @@ eclipse {
 
 application {
     //Define the main class for the application.
-    mainClassName    = 'conway26Java.MainConwayLifeJava'
+    mainClassName    = 'main.java.conway.MainConwayLifeJava'
 }
 
 jar {

@@ -1,6 +1,8 @@
-package test.java.conway.domain;
+package main.java.test;
 
 import static org.junit.Assert.*;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,8 +18,13 @@ public class GridTest {
     
     @Before 
     public void setup() {
-        // Setup iniziale come nel tuo file
+        // Setup 
         g = new Grid(RIGHE, COLONNE);
+    }
+    
+    @After
+	public void down() {
+    	System.out.println("GridTest | down");
     }
     
     @Test
@@ -29,9 +36,11 @@ public class GridTest {
     
     @Test
     public void testStatoInizialeCelle() {
+    	
+    	//Devo verificare che tutte le celle siano inizialmente morte
+    	
         for(int i = 0 ; i < RIGHE ; i++) {
             for(int j = 0 ; j < COLONNE ; j ++) {
-                // CORREZIONE: Uso getCellState() per ottenere il boolean
                 assertFalse(g.getCellState(i, j));
             }
         }
@@ -39,17 +48,18 @@ public class GridTest {
 
     @Test
     public void testSetAndGetCellState() {
-        // Testiamo il metodo setCell e la lettura dello stato
+    	
+		// Imposto una cella a vivo e verifico che valga effettuvamente true (vero)
         g.setCell(5, 5, true);
         assertTrue( g.getCellState(5, 5));
-        assertFalse(g.getCellState(0, 0));
+
     }
 
     @Test
     public void testGetCellObject() {
-        // Verifica che getCell restituisca l'oggetto ICell correttamente
+
         ICell cell = g.getCell(1, 1);
-        assertNotNull("getCell non deve restituire null", cell);
+        assertNotNull(cell);
         
         // Se modifico l'oggetto direttamente, la griglia deve rifletterlo
         cell.setStatus(true); //
@@ -57,14 +67,15 @@ public class GridTest {
     }
 
     @Test
-    public void testClear() {
-        // Popoliamo e poi puliamo
-        g.setCell(0, 0, true);
-        g.setCell(9, 9, true);
+    public void testReset() {
+        // Imposto alcune celle a vivo
+        g.setCell(0, 2, true);
+        g.setCell(9, 11, true);
         
-        g.clear();
+        g.reset();
         
-        assertFalse(g.getCellState(0, 0));
-        assertFalse(g.getCellState(9, 9));
+        // Dopo il reset, tutte le celle devono essere morte
+        assertFalse(g.getCellState(0, 2));
+        assertFalse(g.getCellState(9, 11));
     }
 }

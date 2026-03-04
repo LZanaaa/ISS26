@@ -6,6 +6,7 @@ public class Cell implements ICell{
 
 	public Cell() {
 		super();
+		this.status = false; // Inizialmente, la cella è morta
 	}
 	
 	@Override
@@ -18,7 +19,10 @@ public class Cell implements ICell{
 		this.status = status;
 	}
 	
-	
+	@Override
+	public void switchCellStatus() {
+		this.status = !this.status; 
+	}
 	
 	
 	

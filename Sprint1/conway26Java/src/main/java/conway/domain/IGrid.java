@@ -1,17 +1,14 @@
 package main.java.conway.domain;
 
-public interface IGrid {
+public interface IGrid {    
     
-    int getRighe();
-    
-    int getColonne();
-    
-    boolean getCellState(int r, int c);
-    
-    ICell getCell(int r, int c);
-    
-    void setCell(int r, int c, boolean stato);
-    
-    void clear();
-    
+    // --- PRIMITIVE --- 
+    int getRighe();  //Ottengo il numero naturale di righe della griglia  
+    int getColonne(); //Ottengo il numero naturale di colonne della griglia
+    ICell getCell(int r, int c);  //Ottengo la cella alla posizione riga r e colonna c della griglia
+
+    // --- NON PRIMITIVE ---
+    boolean getCellState(int r, int c); //Ottengo lo stato della cella alla posizione riga r e colonna c della griglia (viva o morta)
+    void setCell(int r, int c, boolean stato); //Imposta lo stato di una cella (r,c).
+    void reset(); //Riporta tutte le celle a stato morto 
 }

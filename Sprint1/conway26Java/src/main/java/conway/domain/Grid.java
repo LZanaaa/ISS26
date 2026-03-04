@@ -29,4 +29,18 @@ public class Grid implements IGrid {
     public int getColonne() {
         return colonne;
     }
+
+
+	@Override
+	public ICell getCell(int r, int c) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		
+	}
 }

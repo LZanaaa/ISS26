@@ -1,68 +1,131 @@
-package main.java.conway.controller;
+package main.java.conway.domain;
+//import java.util.concurrent.TimeUnit;
+import unibo.basicomm23.utils.CommUtils;
 
-import main.java.conway.domain.IGrid;
+/*
+ * LifeController di conwaygui.  ]
+ */
 
-public class LifeController {
+public class LifeController implements GameController {
+    private int generationTime = 500;
+    private  LifeInterface life;
+    private  IOutDev outdev; 
+ 	protected boolean running = false;
+    protected int epoch       = 0;
+
     
-    private IGrid grid;
+    public LifeController( LifeInterface game, IOutDev outdev ){  
+        this.life   = game;       
+        this.outdev = outdev;
+       CommUtils.outyellow("LifeController CREATED outdev="+outdev   );
+       //if( outdev != null ) outdev.displayGrid( life.getGrid() );
+     }
+    
+    
+    public int getGenTime() {
+    	return generationTime;
+    }
+ 
+/*
+ * Funzioni di controllo del gioco
+ */
+    
+	@Override
+	public void switchCellStatus(int x, int y) {
+		ICell c = life.getCell(x, y); 
+		c.switchCellStatus( );   
+		if( outdev != null ) outdev.displayGrid(life.getGrid());
+	}
+	
+	protected void startTheGame() {
+		if( running ) return;   //start sent while running
+		running = true;
+		epoch   = 0;
+		play();		
+	}
+	
+	protected void stopTheGame() {
+		running = false;		
+	}
 
-    public LifeController(IGrid grid) {
-        this.grid = grid;
+	protected void clearTheGame() {
+		if( outdev != null ) outdev.display("lfctrl: clearing");
+ 		stopTheGame();
+ 		//CommUtils.delay(500);   //prima fermo e poi ...
+		epoch = 0;
+		resetAndDisplayGrids(  );   
+	}
+	
+	protected void printout( String s ) {
+		if( outdev != null ) outdev.display(s);
+	}
+	
+//	protected void exitTheGame() {
+//		if( outdev != null ) outdev.close();
+//		System.exit(0);
+//	}
+	
+    protected void play() {  
+			new Thread() {
+			public void run() {			
+				if( outdev != null ) outdev.displayGrid( life.getGrid()  ); 
+				while( running ) {
+//					try {
+//						TimeUnit.MILLISECONDS.sleep(generationTime);
+						CommUtils.delay(generationTime);
+						life.nextGeneration();
+						if( outdev != null ) outdev.displayGrid( life.getGrid()  );
+						epoch++;
+						//CommUtils.outblue("---------Epoch ---- "+epoch );
+//						boolean gridEmpty  = life.gridEmpty();
+//						boolean gridStable = life.gridStable();
+//						if( gridEmpty || gridStable ) {
+//				    		running = false;
+//				    		String reason = gridStable ? "stable" : "empty";
+//				    		String outInfo = "lfctrl: GAME ENDED after " + epoch + 
+//				    				" Epochs since " + reason;
+//				    		CommUtils.outyellow(outInfo);
+//				    		outdev.display(outInfo);
+//				    		epoch = 0;
+//				    		running = false;
+//				    	}
+						
+//					} catch (InterruptedException e) { //per lo sleep
+//						e.printStackTrace();
+//					}
+				}//while
+				printout("gamestopped"); 
+			}
+			}.start();
     }
 
-    /**
-     * Calcola la generazione successiva applicando le 4 regole di Conway.
-     */
-    public void tick() {
-        int rows = grid.getRighe();
-        int cols = grid.getColonne();
-        
-        // Matrice temporanea per non sporcare i dati durante il calcolo
-        boolean[][] nextGen = new boolean[rows][cols];
+ 	
 
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                int vivi = countAliveNeighbors(r, c);
-                boolean alive = grid.getCellStatus(r, c); //
+	protected void resetAndDisplayGrids(   ) {
+		life.resetGrids();
+		if(outdev != null) outdev.displayGrid( life.getGrid() );
+	}
+	
+	
+	@Override
+	public void onStart() {
+		startTheGame();	
+	}
 
-                // Applichiamo le regole di Conway
-                if (alive) {
-                    // Sopravvive solo con 2 o 3 vicini vivi
-                    nextGen[r][c] = (vivi == 2 || vivi == 3);
-                } else {
-                    // Nasce solo con esattamente 3 vicini vivi
-                    nextGen[r][c] = (vivi == 3);
-                }
-            }
-        }
+	@Override
+	public void onStop() {
+		stopTheGame();	
+	}
 
-        // Aggiorniamo la griglia originale con i nuovi stati
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                grid.setCellStatus(r, c, nextGen[r][c]);
-            }
-        }
-    }
+	@Override
+	public void onClear() {
+		clearTheGame();	
+	}
+	@Override
+	public int numEpoch() {
+		return epoch;
+	}
 
-    /**
-     * Conta i vicini vivi nell'intorno di Moore (8 celle)
-     */
-    private int countAliveNeighbors(int r, int c) {
-        int count = 0;
-        // Cicliamo da -1 a +1 rispetto alla cella centrale (r, c)
-        for (int i = r - 1; i <= r + 1; i++) {
-            for (int j = c - 1; j <= c + 1; j++) {
-                // Saltiamo la cella stessa (non è un vicino!)
-                if (i == r && j == c) continue;
 
-                // Controlliamo di non uscire dai bordi della griglia
-                if (i >= 0 && i < grid.getRighe() && j >= 0 && j < grid.getColonne()) {
-                    if (grid.getCellStatus(i, j)) {
-                        count++;
-                    }
-                }
-            }
-        }
-        return count;
-    }
+
 }

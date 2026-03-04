@@ -13,16 +13,23 @@ java {
 
 repositories {
     mavenCentral()
+    flatDir {   dirs './libs'    }
     flatDir {   dirs '../../unibolibs'    }
 }
 
 dependencies {
+    /* JSON ********************************************************************************* */
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation group: 'org.json', name: 'json', version: '20180130'
 
     /* UNIBO ******************************* */
     implementation name: 'uniboInterfaces'
     implementation name: '2p301'
     implementation name: 'unibo.basicomm23-1.0'
-
+    
+    /* conway ******************************* */
+    implementation name: 'conway26Java-1.0'
 }
 
 sourceSets {
@@ -42,8 +49,7 @@ eclipse {
 
 application {
     //Define the main class for the application.
-    //mainClassName    = 'conway26Java.HelloWorld'
-    mainClassName    = 'conway26Java.MainConwayLifeJava'
+    mainClassName    = 'main.java.conway.MainConwayLifeJava'
 }
 
 jar {

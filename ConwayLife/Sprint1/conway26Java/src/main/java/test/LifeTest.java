@@ -1,17 +1,17 @@
 package main.java.test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
-import main.java.conway.domain.Cell;
 import main.java.conway.domain.Life;
 
 class LifeTest {
 	
 	Life life;
+	private final int ROWS = 10;
+	private final int COLS = 10;
 
 	@Before
 	public void setup() {
@@ -23,9 +23,80 @@ class LifeTest {
 		System.out.println("ConwayLifeTest | down");
 	}
 	
-	@Test
-	void test() {
-		fail("Not yet implemented");
+	@Test 
+	void testGetGrid() {
+		System.out.println("ConwayLifeTest | testGetGrid");
+		assertNotNull(life.getGrid());
 	}
+	
+	@Test 
+	void testGridDim() {
+		System.out.println("ConwayLifeTest | testGridDim");
+		assertEquals(ROWS, life.getGrid().getRighe());
+		assertEquals(COLS, life.getGrid().getColonne());
+	}
+	
+	@Test 
+	void testNextGeneration() {
+		System.out.println("ConwayLifeTest | testNextGeneration");
+		life.setCell(1, 1, true);
+		life.setCell(1, 2, true);
+		life.setCell(1, 3, true);
+		
+		life.nextGeneration();
+		
+		assertTrue(life.getCellState(0, 2));
+		assertTrue(life.getCellState(1, 2));
+		assertTrue(life.getCellState(2, 2));
+		
+	}
+	
+	@Test
+	void testSetCell() {
+		System.out.println("ConwayLifeTest | testSetCell");
+		life.setCell(2, 2, true);
+		assertTrue(life.getCellState(2, 2));
+	}
+	
+	@Test
+	void testGetCell() {
+		System.out.println("ConwayLifeTest | testGetCell");
+		life.setCell(3, 3, true);
+		assertNotNull(life.getCell(3, 3));
+		assertTrue(life.getCell(3, 3).isAlive());
+	}
+	
+	@Test
+	void testReset() {
+		System.out.println("ConwayLifeTest | testReset");
+		life.setCell(4, 4, true);
+		life.reset();
+		assertFalse(life.getCellState(4, 4));
+	}
+	
+	@Test 
+	void testGetCellFalse() {
+		System.out.println("ConwayLifeTest | testIsDead");
+		life.setCell(5, 5, false);
+		assertFalse(life.getCellState(5, 5));
+	}
+	
+	//Verifica che il reset riporti tutte le celle a stato morto, 
+	//anche quelle che erano vive prima del reset
+	@Test 
+	void testStateAfterReset() {
+		System.out.println("ConwayLifeTest | testStateAfterReset");
+		life.setCell(6, 6, true);
+		life.reset();
+		assertFalse(life.getCellState(6, 6));
+	}
+	
+	@Test
+	void testGetCellState() {
+		System.out.println("ConwayLifeTest | testGetCellState");
+		life.setCell(7, 7, true);
+		assertTrue(life.getCellState(7, 7));
+	}
+	
 
 }

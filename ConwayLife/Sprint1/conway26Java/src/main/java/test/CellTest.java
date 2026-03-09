@@ -2,10 +2,8 @@ package main.java.test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.*;
-import org.junit.jupiter.api.Test;
 import main.java.conway.domain.Cell; 
 import main.java.conway.domain.ICell;
 

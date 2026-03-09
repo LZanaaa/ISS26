@@ -7,7 +7,7 @@ import org.junit.*;
 import main.java.conway.domain.Cell; 
 import main.java.conway.domain.ICell;
 
-class CellTest {
+public class CellTest {
 	
 	ICell cell;
 	
@@ -22,14 +22,14 @@ class CellTest {
 	}
 
     @Test
-    void testStatoIniziale() {
+    public void testStatoIniziale() {
         ICell cell = new Cell();
         // Una cella appena creata deve essere morta
         assertFalse(cell.isAlive());
     }
 
     @Test
-    void testCambioStato() {
+    public void testCambioStato() {
         ICell cell = new Cell();
         
         // Test attivazione

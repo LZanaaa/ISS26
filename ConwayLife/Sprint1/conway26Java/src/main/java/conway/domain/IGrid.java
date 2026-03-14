@@ -11,4 +11,5 @@ public interface IGrid {
     boolean getCellState(int r, int c); //Ottengo lo stato della cella alla posizione riga r e colonna c della griglia (viva o morta)
     void setCell(int r, int c, boolean stato); //Imposta lo stato di una cella (r,c).
     void reset(); //Riporta tutte le celle a stato morto 
+    int countAliveNeighbours(int r, int c); //Conta il numero di vicini vivi della cella alla posizione riga r e colonna c della griglia
 }

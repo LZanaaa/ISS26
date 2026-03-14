@@ -1,4 +1,4 @@
-package conway26appl;
+package main.java.conway26appl;
 import conway.io.IoJavalin;
 //import main.java.conway.devices.OutInWs;
 //import main.java.conway.domain.*;

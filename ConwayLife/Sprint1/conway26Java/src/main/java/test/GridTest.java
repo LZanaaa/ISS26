@@ -70,12 +70,27 @@ public class GridTest {
     public void testReset() {
         // Imposto alcune celle a vivo
         g.setCell(0, 2, true);
-        g.setCell(9, 11, true);
+        g.setCell(9, 9, true);
         
         g.reset();
         
         // Dopo il reset, tutte le celle devono essere morte
         assertFalse(g.getCellState(0, 2));
-        assertFalse(g.getCellState(9, 11));
+        assertFalse(g.getCellState(9, 9));
+    }
+    
+    @Test
+    public void testCountAliveNeighbours() {
+    	// Imposto alcune celle a vivo
+		g.setCell(1, 1, true);
+		g.setCell(1, 2, true);
+		g.setCell(2, 1, true);
+		
+		// Verifico il numero di vicini vivi 
+		assertEquals(2, g.countAliveNeighbours(1, 1));
+		
+		assertEquals(1, g.countAliveNeighbours(0, 0));
+		
+		assertEquals(3, g.countAliveNeighbours(2, 2));
     }
 }

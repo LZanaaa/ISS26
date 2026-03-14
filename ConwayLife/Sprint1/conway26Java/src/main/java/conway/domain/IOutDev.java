@@ -6,10 +6,11 @@ package main.java.conway.domain;
 public interface IOutDev {
 	public void display(String msg); // For HMI
 
-	public void displayCell(Cell cell, Grid grid);
+	public void displayCell(ICell cell, IGrid grid); 
 
 	public void close();
 
-	public void displayGrid(Grid grid);
+	void displayGrid(IGrid grid);
+ 
 
 }

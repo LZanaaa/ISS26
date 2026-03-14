@@ -1,41 +1,75 @@
 package main.java.conway.domain;
 
 public class Life implements LifeInterface {
+	
+	IGrid grid;
+	
+	public Life() {
+		this.grid = new Grid(10, 10); // Inizializza la griglia con dimensioni 10x10
+	}
 
 	@Override
 	public IGrid getGrid() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return grid;
+		
 	}
 
 	@Override
 	public void nextGeneration() {
-		// TODO Auto-generated method stub
+		
+		int righe = grid.getRighe();
+		int colonne = grid.getColonne();
+		
+		IGrid tempGrid = new Grid(righe, colonne);
+		
+		 for (int i = 0; i < righe; i++) {
+	            for (int j = 0; j < colonne; j++) {
+	            	int aliveNeighbours = grid.countAliveNeighbours(i, j);
+	            	boolean currentState = grid.getCellState(i, j);
+	            	
+	            	if(currentState && (aliveNeighbours < 2 || aliveNeighbours > 3)) {
+	            		tempGrid.setCell(i, j, false); 
+	            	} else if (!currentState && aliveNeighbours == 3) {
+	            		tempGrid.setCell(i, j, true); 
+	            	} else {
+	            		tempGrid.setCell(i, j, currentState); 
+	            	}
+	                
+	            }
+	     }
+		 
+		 for (int i = 0; i < righe; i++) {
+	            for (int j = 0; j < colonne; j++) {
+	                grid.setCell(i, j, tempGrid.getCellState(i, j));
+	            }
+	     }
+		 
 		
 	}
 
 	@Override
 	public void setCell(int r, int c, boolean stato) {
-		// TODO Auto-generated method stub
+		
+		grid.setCell(r, c, stato);
 		
 	}
 
 	@Override
 	public ICell getCell(int r, int c) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return grid.getCell(r, c);
 	}
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
+		grid.reset();
 		
 	}
 
 	@Override
 	public boolean getCellState(int r, int c) {
-		// TODO Auto-generated method stub
-		return false;
+		return grid.getCellState(r, c);
 	}
 
 }

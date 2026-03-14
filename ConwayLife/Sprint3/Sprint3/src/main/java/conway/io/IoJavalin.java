@@ -1,4 +1,4 @@
-package conway.io;
+package main.java.conway.io;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

@@ -1,11 +1,15 @@
-package main.java.conway.domain;
+package conway.domain;
 
 public class Life implements LifeInterface {
 	
 	IGrid grid;
+	int righe;
+	int colonne;
 	
-	public Life() {
-		this.grid = new Grid(10, 10); // Inizializza la griglia con dimensioni 10x10
+	public Life(int righe, int colonne) {
+		this.righe = righe;
+		this.colonne = colonne;
+		grid = new Grid(righe, colonne);
 	}
 
 	@Override

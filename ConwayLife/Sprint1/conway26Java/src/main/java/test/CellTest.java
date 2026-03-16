@@ -1,11 +1,11 @@
-package main.java.test;
+package test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.*;
-import main.java.conway.domain.Cell; 
-import main.java.conway.domain.ICell;
+import conway.domain.Cell; 
+import conway.domain.ICell;
 
 public class CellTest {
 	

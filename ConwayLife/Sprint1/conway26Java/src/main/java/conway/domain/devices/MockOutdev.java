@@ -1,11 +1,7 @@
-package main.java.conway.domain.devices;
+package conway.domain.devices;
 
 
-import main.java.conway.domain.Cell;
-import main.java.conway.domain.Grid;
-import main.java.conway.domain.ICell;
-import main.java.conway.domain.IGrid;
-import main.java.conway.domain.IOutDev;
+import conway.domain.*;
 import unibo.basicomm23.utils.CommUtils;
 
 public class MockOutdev implements IOutDev {
@@ -16,10 +12,6 @@ public class MockOutdev implements IOutDev {
 
 	}
 
-	@Override
-	public void displayCell(ICell cell, IGrid grid) {
-		// CommUtils.outcyan("x="+cell.getX() + "y="+cell.getY() + cell.getState());
-	}
 
 	@Override
 	public void close() {
@@ -29,6 +21,12 @@ public class MockOutdev implements IOutDev {
 	@Override
 	public void displayGrid(IGrid grid) {
 		// grid.printGrid();
+	}
+
+	@Override
+	public void displayCell(IGrid grid, int x, int y) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

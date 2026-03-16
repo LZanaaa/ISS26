@@ -1,4 +1,4 @@
-package main.java.test;
+package test;
 
 import static org.junit.Assert.*;
 
@@ -6,9 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import main.java.conway.domain.Grid;
-import main.java.conway.domain.IGrid;
-import main.java.conway.domain.ICell;
+import conway.domain.*;
 
 public class GridTest {
 

@@ -8,11 +8,12 @@ import java.util.concurrent.CompletableFuture;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.websocket.WsMessageContext;
+import conway.domain.*;
 import unibo.basicomm23.utils.CommUtils;
 import unibo.basicomm23.interfaces.IApplMessage;
 import unibo.basicomm23.msg.ApplMessage;
 
-public class IoJavalin {
+public class IoJavalin implements IOutDev {
 	
 	private WsMessageContext pageCtx ;
 	private GameController controller;
@@ -123,18 +124,24 @@ public class IoJavalin {
                     if( m.msgContent().equals("ready")) { 
                     	pageCtx = ctx;  //memorizzo connession pagina
                     }else if( m.msgContent().contains("cell(")) { 
-                    	//Funziona se arriva da CallerServerWs es. cell(5,6,1)
-                    	pageCtx.send( m.msgContent()); 
-                    	//TODO
-                    	String[] parts = m.msgContent().replace("cell(", "").replace(")", "").split(",");
+                    	
+                    	String[] parts = m.msgContent().replace("cell(", "").replace(")", "").trim().split(",");
+                    	
                     	int r = Integer.parseInt(parts[0].trim());
                     	int c = Integer.parseInt(parts[1].trim());
                     	
-                    	if(controller != null) controller.switchCell(r, c);
+                    	if(controller != null) controller.switchCellStatus(r, c);
                     	
-                    }else ctx.send(m.msgContent());
-                }catch(Exception e) {
-                	CommUtils.outred("IoJavalin |  error:" + e.getMessage());
+                    }else if( m.msgContent().equals("start")) { 
+						if(controller != null) controller.onStart();
+					}else if( m.msgContent().equals("stop")) {
+						if(controller != null) controller.onStop();
+					}else if( m.msgContent().equals("clear")) {
+						if(controller != null) controller.onClear();
+					}                    
+                }catch(Throwable e) {
+                	CommUtils.outred("Javalin | Errore nel parsing del messaggio: " + message);
+                    e.printStackTrace();
                 }               
             });
         });        
@@ -145,11 +152,50 @@ public class IoJavalin {
 	    this.controller = controller;
 	}
 
+
+
+	@Override
+	public void display(String msg) {
+		 if (pageCtx != null) {
+			 pageCtx.send(msg);
+		 } else {
+			 CommUtils.outred("IoJavalin | display: Nessun client connesso per inviare il messaggio: " + msg);
+		 }
+		
+	}
+
+	@Override
+	public void close() {
+		 if (pageCtx != null) {
+			 pageCtx.send("close");
+		 } else {
+			 CommUtils.outred("IoJavalin | close: Nessun client connesso per inviare il messaggio di chiusura");
+		 }
+		
+	}
+
+
+	@Override
+	public void displayGrid(IGrid grid) {
+	    if (pageCtx != null) {
+
+	        for (int i = 0; i < grid.getRighe(); i++) {
+	            for (int j = 0; j < grid.getColonne(); j++) {
+	                int stato = grid.getCellState(i, j) ? 1 : 0;
+	                pageCtx.send("cell(" + i + "," + j + "," + stato + ")");
+	            }
+	        }
+	    } else {
+	        CommUtils.outred("IoJavalin | displayGrid: Nessun client connesso");
+	    }
+	}
 	
-	public static void main(String[] args) {
-		var resource = IoJavalin.class.getResource("/pages");
-		CommUtils.outgreen("DEBUG: La cartella /page si trova in: " + resource);
-		new IoJavalin();
+	@Override
+	public void displayCell(IGrid grid, int x, int y) {
+	    if (pageCtx != null) {
+	        int stato = grid.getCellState(x, y) ? 1 : 0;
+	        pageCtx.send("cell(" + x + "," + y + "," + stato + ")");
+	    }
 	}
 
 }

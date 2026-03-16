@@ -1,4 +1,4 @@
-package main.java.conway;
+package conway;
 
 public class MainConwayLifeJava {
 

@@ -1,11 +1,11 @@
-package main.java.test;
+package test;
 
 import org.junit.After;
 import org.junit.Before;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import main.java.conway.domain.Life;
+import conway.domain.Life;
 
 public class LifeTest {
 	
@@ -16,7 +16,7 @@ public class LifeTest {
 	@Before
 	public void setup() {
 		System.out.println("ConwayLifeTest | setup");	
-	    life = new Life();
+	    life = new Life(10, 10);
 	}
 	@After
 	public void down() {

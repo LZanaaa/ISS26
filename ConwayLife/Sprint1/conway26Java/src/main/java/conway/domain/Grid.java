@@ -1,4 +1,4 @@
-package main.java.conway.domain;
+package conway.domain;
 
 public class Grid implements IGrid {
     

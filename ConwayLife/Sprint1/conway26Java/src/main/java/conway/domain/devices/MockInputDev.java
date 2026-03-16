@@ -1,4 +1,4 @@
-package main.java.conway.domain.devices;
+package conway.domain.devices;
 
 public class MockInputDev {
 

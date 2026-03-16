@@ -1,4 +1,4 @@
-package main.java.conway.domain;
+package conway.domain;
 
 import unibo.basicomm23.utils.CommUtils;
 
@@ -95,12 +95,14 @@ public class LifeController implements GameController {
     
     @Override
     public int numEpoch() {
-        return epoch;
+        return epoch;	
     }
 
 	@Override
 	public void switchCellStatus(int x, int y) {
-		switchCellStatus(x, y);
+		life.getCell(x, y).switchCellStatus();
+		
+		outdev.displayGrid(life.getGrid());
 	}
 
 

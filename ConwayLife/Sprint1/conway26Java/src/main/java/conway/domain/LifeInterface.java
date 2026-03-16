@@ -1,4 +1,4 @@
-package main.java.conway.domain;
+package conway.domain;
 
 public interface LifeInterface {
 	

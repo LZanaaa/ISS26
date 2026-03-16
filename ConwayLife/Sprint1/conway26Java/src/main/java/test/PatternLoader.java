@@ -1,4 +1,4 @@
-package main.java.test;
+package test;
 
 import java.nio.file.*;
 import java.util.List;

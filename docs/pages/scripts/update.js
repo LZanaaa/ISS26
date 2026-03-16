@@ -23,3 +23,6 @@ const urlIGrid = "https://raw.githubusercontent.com/LZanaaa/ISS26/refs/heads/mai
 
 loadRemoteCode(urlICell, "code-icell");
 loadRemoteCode(urlIGrid, "code-igrid");
+loadRemoteCode(urlILife, "code-lifeinterface");
+loadRemoteCode(urlOutDev, "code-outdev");
+loadRemoteCode(urlGame, "code-game");

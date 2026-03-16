@@ -1,4 +1,4 @@
-package main.java.conway26appl.caller;
+package conway26appl.caller;
 import unibo.basicomm23.interfaces.IApplMessage;
 import unibo.basicomm23.msg.ApplMessage;
 import unibo.basicomm23.utils.CommUtils;

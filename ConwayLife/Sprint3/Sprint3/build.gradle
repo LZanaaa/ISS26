@@ -8,12 +8,12 @@ plugins {
 version '1.0'
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    //toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 repositories {
     mavenCentral()
-    flatDir {   dirs './build/libs'    }
+    //flatDir {   dirs './build/libs'    }
     flatDir {   dirs '../../unibolibs'    } 
 }
 
@@ -92,5 +92,14 @@ jacocoTestReport {
         xml.required = false
         csv.required = false
         html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
+    }
+}
+
+task checkLibs {
+    doLast {
+        println "Cerco le librerie in: ${file('../../unibolibs').absolutePath}"
+        file('../../unibolibs').listFiles().each { 
+            println "File trovato: ${it.name}" 
+        }
     }
 }

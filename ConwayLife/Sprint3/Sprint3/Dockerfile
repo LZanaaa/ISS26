@@ -14,9 +14,9 @@ CMD ["bash", "conway26GuiHtml"]
 
 ## 0) docker rmi gui26html:1.0
 ## 1) gradlew distTar
-## 2) docker build -t gui26html:1.0 .   ##lowercase
+# 2) docker build -t gui26html:1.0 .   ##lowercase
  
-# docker run -it --rm --name gui26html -p8080:8080/tcp   gui26html:1.0  /bin/bash
+## docker run -it --rm --name gui26html -p8080:8080/tcp   gui26html:1.0  /bin/bash
  
 # docker tag gui26html:1.0 natbodocker/gui26html:1.0
 #type docker_password.txt | docker login --username natbodocker --password-stdin

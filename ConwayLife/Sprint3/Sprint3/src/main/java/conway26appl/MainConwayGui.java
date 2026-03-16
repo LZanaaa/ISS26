@@ -1,19 +1,13 @@
-package main.java.conway26appl;
-import conway.io.IoJavalin;
-//import main.java.conway.devices.OutInWs;
-//import main.java.conway.domain.*;
-import unibo.basicomm23.utils.CommUtils;
-public class MainConwayGui  {
-   	private IoJavalin server = new IoJavalin();
-  	
-    public static void main(String[] args) {
-	    System.out.println("MainConway | STARTS " );  
-	    
-		var resource = MainConwayGui.class.getResource("/page");
-		CommUtils.outgreen("DEBUG: La cartella /page si trova in: " + resource);
+public static void main(String[] args) {
 
-	    MainConwayGui app = new MainConwayGui();
-	    System.out.println("MainConway | ENDS " );  
-    }
-
+    LifeInterface life = new Life(20, 20); 
+    
+    IOutDev webOutDev = new WebOutDev(); 
+    
+    GameController controller = new LifeController(life, webOutDev); 
+    
+    IoJavalin server = new IoJavalin();
+    server.setup(controller); 
+    
+    System.out.println("MainConway | READY on http://localhost:8080");
 }

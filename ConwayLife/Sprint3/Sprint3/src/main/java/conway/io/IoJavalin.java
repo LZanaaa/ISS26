@@ -1,4 +1,4 @@
-package main.java.conway.io;
+package conway.io;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -15,6 +15,9 @@ import unibo.basicomm23.msg.ApplMessage;
 public class IoJavalin {
 	
 	private WsMessageContext pageCtx ;
+	private GameController controller;
+
+	
 	public IoJavalin() {
         var app = Javalin.create(config -> {
 			config.staticFiles.add(staticFiles -> {
@@ -122,7 +125,13 @@ public class IoJavalin {
                     }else if( m.msgContent().contains("cell(")) { 
                     	//Funziona se arriva da CallerServerWs es. cell(5,6,1)
                     	pageCtx.send( m.msgContent()); 
-                    	//TODO: inviare a LifeController
+                    	//TODO
+                    	String[] parts = m.msgContent().replace("cell(", "").replace(")", "").split(",");
+                    	int r = Integer.parseInt(parts[0].trim());
+                    	int c = Integer.parseInt(parts[1].trim());
+                    	
+                    	if(controller != null) controller.switchCell(r, c);
+                    	
                     }else ctx.send(m.msgContent());
                 }catch(Exception e) {
                 	CommUtils.outred("IoJavalin |  error:" + e.getMessage());
@@ -132,7 +141,9 @@ public class IoJavalin {
 	}
 	
  
-	
+	public void setup(GameController controller) {
+	    this.controller = controller;
+	}
 
 	
 	public static void main(String[] args) {

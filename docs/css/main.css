@@ -1,0 +1,91 @@
+/* Reset di base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f4f4f4;
+    font-family: 'Courier New', Courier, monospace; /* Ritorno alle origini */
+    color: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background: #ffffff;
+    border: 3px solid #1a1a1a;
+    padding: 40px;
+    max-width: 500px;
+    width: 100%;
+    /* Ombra netta stile Neo-Brutalist */
+    box-shadow: 10px 10px 0px 0px #1a1a1a;
+}
+
+header {
+    margin-bottom: 30px;
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 10px;
+}
+
+h1 {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
+
+p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+code {
+    background: #eee;
+    padding: 2px 4px;
+}
+
+/* Lista dei link */
+.link-list {
+    list-style: none;
+}
+
+.link-list li {
+    margin-bottom: 15px;
+}
+
+.link-item {
+    display: block;
+    text-decoration: none;
+    color: #1a1a1a;
+    padding: 10px;
+    border: 1px solid #1a1a1a;
+    transition: all 0.2s ease;
+}
+
+.link-item:hover {
+    background-color: #1a1a1a;
+    color: #fff;
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0px 0px #0051ff; /* Colore accento */
+}
+
+.prefix {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #0051ff;
+}
+
+.link-item:hover .prefix {
+    color: #fff;
+}
+
+.tba {
+    padding: 10px;
+    color: #999;
+    border: 1px dashed #ccc;
+    cursor: not-allowed;
+}

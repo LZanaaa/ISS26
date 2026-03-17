@@ -181,7 +181,7 @@ public class IoJavalin implements IOutDev {
 
 	        for (int i = 0; i < grid.getRighe(); i++) {
 	            for (int j = 0; j < grid.getColonne(); j++) {
-	                int stato = grid.getCellState(i, j) ? 1 : 0;
+	                int stato = grid.getCellState(i, j) ? 0 : 1;
 	                pageCtx.send("cell(" + i + "," + j + "," + stato + ")");
 	            }
 	        }
@@ -193,7 +193,7 @@ public class IoJavalin implements IOutDev {
 	@Override
 	public void displayCell(IGrid grid, int x, int y) {
 	    if (pageCtx != null) {
-	        int stato = grid.getCellState(x, y) ? 1 : 0;
+	        int stato = grid.getCellState(x, y) ? 0 : 1;
 	        pageCtx.send("cell(" + x + "," + y + "," + stato + ")");
 	    }
 	}

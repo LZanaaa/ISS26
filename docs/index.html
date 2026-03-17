@@ -2,34 +2,40 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Indice Pagine</title>
-    <style>
-        body { font-family: sans-serif; line-height: 1.6; padding: 20px; }
-        ul { list-style-type: none; padding: 0; }
-        li { margin: 10px 0; }
-        a { text-decoration: none; color: blue; font-size: 18px; }
-        a:hover { text-decoration: underline; }
-    </style>
-    <!-- Google tag (gtag.js) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indice Pagine | Conway26</title>
+    <link rel="stylesheet" href="style.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CE9NR1BN3B"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-CE9NR1BN3B');
-    </script>
+    <script src="script.js"></script>
 </head>
 <body>
 
-    <h1>Indice dei contenuti</h1>
-    <p>Seleziona una pagina dalla cartella <strong>pages</strong>:</p>
+    <main class="container">
+        <header>
+            <h1>Indice dei contenuti</h1>
+            <p>Seleziona una pagina dalla cartella <code>/pages</code></p>
+        </header>
 
-    <ul>
-        <li><a href="pages/conway26Java_v0.html">Sprint 1</a></li>
-        <li><a href="pages/conway26JavaSwing_v0.html">Sprint 2</a></li>
-        <li><a href=""></a>TBA</li>
-    </ul>
+        <nav>
+            <ul class="link-list">
+                <li>
+                    <a href="pages/conway26Java_v0.html" class="link-item">
+                        <span class="prefix">01.</span> Sprint 1
+                    </a>
+                </li>
+                <li>
+                    <a href="pages/conway26JavaSwing_v0.html" class="link-item">
+                        <span class="prefix">02.</span> Sprint 2
+                    </a>
+                </li>
+                <li class="tba">
+                    <a href="pages/Sprint3.html" class="link-item">
+                        <span class="prefix">03.</span> Sprint 3
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </main>
 
 </body>
 </html>

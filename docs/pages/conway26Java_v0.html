@@ -268,12 +268,29 @@ div.imagedesc{
 <h2>Problem analysis</h2>
  
 
-<h2>Test plans</h2> 
+<h2>Test plans</h2>
+        <p>
+            Test mantenuti dallo sprint1:
+        </p>
+        <ul>
+            <li><b>ICell:</b> Verificare che una cella appena creata sia inizialmente in stato "morto".
+                Verificare inoltre che i metodi per cambiare lo stato (attivazione e disattivazione) modifichino correttamente
+                il valore interno della cella.</li>
+
+            <li><b>IGrid:</b> Verificare che la griglia venga istanziata con le dimensioni corrette (righe e
+                colonne) e che tutte le celle al suo interno nascano morte. Verificare la corretta assegnazione e lettura dello
+                stato delle celle tramite coordinate. Verificare il corretto funzionamento dell'algoritmo di conteggio
+                dei vicini vivi.</li>
+
+            <li><b>LifeInterface:</b> Verificare che l'applicazione delle Regole di Conway per il calcolo della
+                generazione successiva (<code>nextGeneration</code>) produca i risultati attesi. 
+                Verificare che l'operazione di <code>reset</code> riporti effettivamente tutta la mappa allo stato
+                inattivo.</li>
+        </ul>
 
 
 <h2>Project</h2> 
- 
- 
+  
 
 <h2>Testing</h2> 
  

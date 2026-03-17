@@ -5,10 +5,8 @@ async function loadRemoteCode(url, targetId) {
         const text = await response.text();
         const element = document.getElementById(targetId);
 
-        // Inseriamo il testo puro (textContent gestisce i caratteri < > automaticamente)
         element.textContent = text;
 
-        // Applichiamo la colorazione Java di Prism
         if (typeof Prism !== 'undefined') {
             Prism.highlightElement(element);
         }
@@ -17,12 +15,26 @@ async function loadRemoteCode(url, targetId) {
     }
 }
 
-// Eseguiamo il caricamento per ogni file
-const urlICell = "https://raw.githubusercontent.com/LZanaaa/ISS26/refs/heads/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/ICell.java";
-const urlIGrid = "https://raw.githubusercontent.com/LZanaaa/ISS26/refs/heads/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/IGrid.java";
+// Funzione per mostrare/nascondere il codice
+function toggleCode(codeId) {
+    const preElement = document.getElementById("pre-" + codeId);
+    if (preElement.style.display === "none") {
+        preElement.style.display = "block";
+    } else {
+        preElement.style.display = "none";
+    }
+}
 
-loadRemoteCode(urlICell, "code-icell");
-loadRemoteCode(urlIGrid, "code-igrid");
-loadRemoteCode(urlILife, "code-lifeinterface");
-loadRemoteCode(urlOutDev, "code-outdev");
-loadRemoteCode(urlGame, "code-game");
+// Configurazione URL base (Raw) e caricamento dei file
+const baseUrl = "https://raw.githubusercontent.com/LZanaaa/ISS26/refs/heads/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/";
+
+// Lista di tutti i file da caricare
+loadRemoteCode(baseUrl + "ICell.java", "code-icell");
+loadRemoteCode(baseUrl + "Cell.java", "code-cell");
+loadRemoteCode(baseUrl + "IGrid.java", "code-igrid");
+loadRemoteCode(baseUrl + "Grid.java", "code-grid");
+loadRemoteCode(baseUrl + "LifeInterface.java", "code-lifeinterface");
+loadRemoteCode(baseUrl + "Life.java", "code-life");
+loadRemoteCode(baseUrl + "GameController.java", "code-gamecontroller");
+loadRemoteCode(baseUrl + "LifeController.java", "code-lifecontroller");
+loadRemoteCode(baseUrl + "IOutDev.java", "code-outdev");

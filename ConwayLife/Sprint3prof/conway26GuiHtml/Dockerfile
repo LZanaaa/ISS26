@@ -12,8 +12,8 @@ WORKDIR /conway26GuiHtml-1.0/bin
 
 CMD ["bash", "conway26GuiHtml"]
 
-## 0) docker rmi gui26html:1.0
-## 1) gradlew distTar
+# 0) docker rmi gui26html:1.0
+# 1) gradlew distTar
 ## 2) docker build -t gui26html:1.0 .   ##lowercase
  
 ## docker run -it --rm --name gui26html -p8080:8080/tcp   gui26html:1.0  /bin/bash

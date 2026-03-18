@@ -33,6 +33,7 @@ dependencies {
 
     /* javalin ******************************* */
 	implementation 'io.javalin:javalin-bundle:6.1.3'
+
 }
 
 sourceSets {

@@ -26,7 +26,7 @@ function toggleCode(codeId) {
 }
 
 // Configurazione URL base (Raw) e caricamento dei file
-const baseUrl = "https://raw.githubusercontent.com/LZanaaa/ISS26/refs/heads/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/";
+const baseUrl = "https://raw.githubusercontent.com/LZanaaa/ISS26/refs/heads/main/progetti/ConwayLife/Sprint1/src/main/java/conway/domain/";
 
 // Lista di tutti i file da caricare
 loadRemoteCode(baseUrl + "ICell.java", "code-icell");

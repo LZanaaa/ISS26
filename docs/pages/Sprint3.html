@@ -31,88 +31,34 @@
 
 
         <!-- <div class="remark"> -->
-        <pre>
-R1: Realizzare una versione in Java del gioco Life di Conway, come gioco zero-player. 
-    Il gioco consiste nell’introdurre una Griglia di Celle il cui stato (cella ‘viva’ o cella ‘morta’) 
-    evolve come stabilito dallle regole di ConwayLife
-
-R2: L’utente umano deve poter:
-     - specificare la configurazione iniziale della griglia del gioco	
-     - vedere l’evoluzione del gioco in forma opportuna 
-        (si veda <a href='https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#section.6.3'>Problema della vista del gioco</a> )
-     - fermare e far ripartire l’evoluzione del gioco
-     - pulire (a gioco fermo) la configurazione della griglia del gioco
-
-</pre>
+        <ol>
+            <li>Dotare il gioco <strong>Life</strong> di una pagina HTML come dispositivo di I/O.</li>
+            <li>La pagina deve costituire un <strong>componente esterno</strong> alla applicazione, seguendo l'architettura
+                riportata in <b>IoJavalin.</b></li>
+            <li>Il gestore del gioco sarà l’utente che ha aperto per primo (<strong>Owner</strong>) la pagina HTML collegata.
+                Solo la pagina dell’Owner avrà i pulsanti di comando <span class="highlight">START / STOP / CLEAN / EXIT</span>
+                attivi.</li>
+            <li>La pagina HTML deve essere <strong>aggiornata in modo automatico</strong> man mano che il gioco procede.</li>
+            <li>Un utente non-owner che si collega mentre il gioco è in corso deve poter visualizzare correttamente lo
+                <strong>stato attuale della griglia</strong>.</li>
+            <li>Il deployment del gioco deve avvenire mediante <strong>Docker</strong>.</li>
+        </ol>
 
 
         <h2>Requirement analysis</h2>
-        <p>Dopo aver parlato col committente, abbiamo formalizzato il seguente modello:</p>
+        <p>Per le classi ed i test dell'architettura del gioco Life fare riferimento allo <a href="conway26JavaSwing_v0.html">sprint 2</a></p>
 
-        <div class="requirement-model">
-            <div class="code-container" style="margin-bottom: 10px;">
-                <h3 onclick="toggleCode('code-icell')" style="cursor:pointer; color: #2196F3; display: inline-block;">+
-                    ICell.java</h3>
-                <pre id="pre-code-icell"
-                    style="display:none;"><code class="language-java" id="code-icell">Loading...</code></pre>
-            </div>
+        <p>L'interfaccia di Input/Output con il browser è la seguente:<pre><code>public interface IOutDev {
+	public void display(String msg); // For HMI
+	
+	public void displayCell(IGrid grid, int x, int y);
 
-            <div class="code-container" style="margin-bottom: 10px;">
-                <h3 onclick="toggleCode('code-cell')" style="cursor:pointer; color: #2196F3; display: inline-block;">+
-                    Cell.java</h3>
-                <pre id="pre-code-cell"
-                    style="display:none;"><code class="language-java" id="code-cell">Loading...</code></pre>
-            </div>
+	public void close();
 
-            <div class="code-container" style="margin-bottom: 10px;">
-                <h3 onclick="toggleCode('code-igrid')" style="cursor:pointer; color: #2196F3; display: inline-block;">+
-                    IGrid.java</h3>
-                <pre id="pre-code-igrid"
-                    style="display:none;"><code class="language-java" id="code-igrid">Loading...</code></pre>
-            </div>
+	void displayGrid(IGrid grid);
+ 
 
-            <div class="code-container" style="margin-bottom: 10px;">
-                <h3 onclick="toggleCode('code-grid')" style="cursor:pointer; color: #2196F3; display: inline-block;">+
-                    Grid.java</h3>
-                <pre id="pre-code-grid"
-                    style="display:none;"><code class="language-java" id="code-grid">Loading...</code></pre>
-            </div>
-
-            <div class="code-container" style="margin-bottom: 10px;">
-                <h3 onclick="toggleCode('code-lifeinterface')"
-                    style="cursor:pointer; color: #2196F3; display: inline-block;">+ LifeInterface.java</h3>
-                <pre id="pre-code-lifeinterface"
-                    style="display:none;"><code class="language-java" id="code-lifeinterface">Loading...</code></pre>
-            </div>
-
-            <div class="code-container" style="margin-bottom: 10px;">
-                <h3 onclick="toggleCode('code-life')" style="cursor:pointer; color: #2196F3; display: inline-block;">+
-                    Life.java</h3>
-                <pre id="pre-code-life"
-                    style="display:none;"><code class="language-java" id="code-life">Loading...</code></pre>
-            </div>
-
-            <div class="code-container" style="margin-bottom: 10px;">
-                <h3 onclick="toggleCode('code-gamecontroller')"
-                    style="cursor:pointer; color: #2196F3; display: inline-block;">+ GameController.java</h3>
-                <pre id="pre-code-gamecontroller"
-                    style="display:none;"><code class="language-java" id="code-gamecontroller">Loading...</code></pre>
-            </div>
-
-            <div class="code-container" style="margin-bottom: 10px;">
-                <h3 onclick="toggleCode('code-lifecontroller')"
-                    style="cursor:pointer; color: #2196F3; display: inline-block;">+ LifeController.java</h3>
-                <pre id="pre-code-lifecontroller"
-                    style="display:none;"><code class="language-java" id="code-lifecontroller">Loading...</code></pre>
-            </div>
-
-            <div class="code-container" style="margin-bottom: 10px;">
-                <h3 onclick="toggleCode('code-outdev')" style="cursor:pointer; color: #2196F3; display: inline-block;">+
-                    IOutDev.java</h3>
-                <pre id="pre-code-outdev"
-                    style="display:none;"><code class="language-java" id="code-outdev">Loading...</code></pre>
-            </div>
-        </div>
+}</code></pre></p>
 
 
 
@@ -121,7 +67,7 @@ R2: L’utente umano deve poter:
 
         <div>
             <div>
-                L'evoluzione del gioco è la distribuzione web del gioco, utilizzando a tal fine un server Javalin (leggero e facile da utilizzare) e la tecnologia websocket.
+                L'evoluzione del gioco è la distribuzione web del gioco, come richiesto dal committente, viene utilizzato a tal fine un server Javalin (leggero e facile da utilizzare) e la tecnologia websocket.
             </div>
             <div>
                 <img src="../img/IOJavalinInt.png" alt="IOJavalinInt" width="50%" height="50%" style="display: block; margin-left: 15px; margin-right: auto; margin-top: 30px; margin-bottom: 30px;">

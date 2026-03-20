@@ -1,35 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-
-<link rel="stylesheet" type="text/css" href="../css/mystyle.css">
-<!--
-    <script type="text/javascript" src="../css/issStyle.js"></script>
--->
-<script type="text/javascript" src="../scripts/update.js"></script>
-    
+    <link rel="stylesheet" type="text/css" href="../css/mystyle.css">
+    <script type="text/javascript" src="../scripts/update.js"></script>
+    <title>conway26JavaSwing_v0</title>
 </head>
-   
-<title>conway26JavaSwing_v0</title></head>
-    
 
 <body>
 <div id="top">
-<h1>ConwayLife Sprint2</h1>
+    <h1>ConwayLife Sprint2</h1>
 </div>  
 
 <div class="body">  
 
-<h2>Introduction</h2>
-<b>Goal</b>: dotare il 
-<a href='https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#chapter.6'>GAME OF LIFE DI CONWAY</a>
-di una interfaccia grafica di interazione con l'utente, per realizzare il <b>requisito R2</b>.
- 
-<h2>Requirements</h2>
-
- 
-<!-- <div class="remark"> -->
-<pre>
+    <h2>Introduction</h2>
+    <b>Goal</b>: dotare il 
+    <a href='https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#chapter.6'>GAME OF LIFE DI CONWAY</a>
+    di una interfaccia grafica di interazione con l'utente, per realizzare il <b>requisito R2</b>.
+     
+    <h2>Requirements</h2>
+    <pre>
 R1: Realizzare una versione in Java del gioco Life di Conway, come gioco zero-player. 
     Il gioco consiste nell’introdurre una Griglia di Celle il cui stato (cella ‘viva’ o cella ‘morta’) 
     evolve come stabilito dallle regole di ConwayLife
@@ -40,98 +30,90 @@ R2: L’utente umano deve poter:
         (si veda <a href='https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#section.6.3'>Problema della vista del gioco</a> )
      - fermare e far ripartire l’evoluzione del gioco
      - pulire (a gioco fermo) la configurazione della griglia del gioco
+    </pre>
+      
+    <h2>Requirement analysis</h2>
+    <p>Dopo aver parlato col committente, abbiamo formalizzato il seguente modello:</p>
 
-</pre>
-  
+    <div class="requirement-model">
+        <div class="code-container">
+            <h3 class="toggle-trigger" data-target="code-icell">+ ICell.java</h3>
+            <a class="code-link" href="https://github.com/LZanaaa/ISS26/tree/main/progetti/ConwayLife/Sprint1/src/main/java/conway/domain/ICell.java" target="_blank">Codice</a>
+            <pre id="pre-code-icell" class="code-pre"><code class="language-java" id="code-icell">Loading...</code></pre>
+        </div>
 
-<h2>Requirement analysis</h2>
-<p>Dopo aver parlato col committente, abbiamo formalizzato il seguente modello:</p>
+        <div class="code-container">
+            <h3 class="toggle-trigger" data-target="code-cell">+ Cell.java</h3>
+            <a class="code-link" href="https://github.com/LZanaaa/ISS26/tree/main/progetti/ConwayLife/Sprint1/src/main/java/conway/domain/Cell.java" target="_blank">Codice</a>
+            <pre id="pre-code-cell" class="code-pre"><code class="language-java" id="code-cell">Loading...</code></pre>
+        </div>
 
-<div class="requirement-model">
-    <div class="code-container" style="margin-bottom: 10px;">
-        <h3 onclick="toggleCode('code-icell')" style="cursor:pointer; color: #2196F3; display: inline-block;">+ ICell.java</h3>
-        <pre id="pre-code-icell" style="display:none;"><code class="language-java" id="code-icell">Loading...</code></pre>
+        <div class="code-container">
+            <h3 class="toggle-trigger" data-target="code-igrid">+ IGrid.java</h3>
+            <a class="code-link" href="https://github.com/LZanaaa/ISS26/tree/main/progetti/ConwayLife/Sprint1/src/main/java/conway/domain/IGrid.java" target="_blank">Codice</a>
+            <pre id="pre-code-igrid" class="code-pre"><code class="language-java" id="code-igrid">Loading...</code></pre>
+        </div>
+
+        <div class="code-container">
+            <h3 class="toggle-trigger" data-target="code-grid">+ Grid.java</h3>
+            <a class="code-link" href="https://github.com/LZanaaa/ISS26/tree/main/progetti/ConwayLife/Sprint1/src/main/java/conway/domain/Grid.java" target="_blank">Codice</a>
+            <pre id="pre-code-grid" class="code-pre"><code class="language-java" id="code-grid">Loading...</code></pre>
+        </div>
+
+        <div class="code-container">
+            <h3 class="toggle-trigger" data-target="code-lifeinterface">+ LifeInterface.java</h3>
+            <a class="code-link" href="https://github.com/LZanaaa/ISS26/tree/main/progetti/ConwayLife/Sprint1/src/main/java/conway/domain/LifeInterface.java" target="_blank">Codice</a>
+            <pre id="pre-code-lifeinterface" class="code-pre"><code class="language-java" id="code-lifeinterface">Loading...</code></pre>
+        </div>
+
+        <div class="code-container">
+            <h3 class="toggle-trigger" data-target="code-life">+ Life.java</h3>
+            <a class="code-link" href="https://github.com/LZanaaa/ISS26/tree/main/progetti/ConwayLife/Sprint1/src/main/java/conway/domain/Life.java" target="_blank">Codice</a>
+            <pre id="pre-code-life" class="code-pre"><code class="language-java" id="code-life">Loading...</code></pre>
+        </div>
+
+        <div class="code-container">
+            <h3 class="toggle-trigger" data-target="code-gamecontroller">+ GameController.java</h3>
+            <a class="code-link" href="https://github.com/LZanaaa/ISS26/tree/main/progetti/ConwayLife/Sprint1/src/main/java/conway/domain/GameController.java" target="_blank">Codice</a>
+            <pre id="pre-code-gamecontroller" class="code-pre"><code class="language-java" id="code-gamecontroller">Loading...</code></pre>
+        </div>
+
+        <div class="code-container">
+            <h3 class="toggle-trigger" data-target="code-lifecontroller">+ LifeController.java</h3>
+            <a class="code-link" href="https://github.com/LZanaaa/ISS26/tree/main/progetti/ConwayLife/Sprint1/src/main/java/conway/domain/LifeController.java" target="_blank">Codice</a>
+            <pre id="pre-code-lifecontroller" class="code-pre"><code class="language-java" id="code-lifecontroller">Loading...</code></pre>
+        </div>
+
+        <div class="code-container">
+            <h3 class="toggle-trigger" data-target="code-outdev">+ IOutDev.java</h3>
+            <a class="code-link" href="https://github.com/LZanaaa/ISS26/tree/main/progetti/ConwayLife/Sprint1/src/main/java/conway/domain/IOutDev.java" target="_blank">Codice</a>
+            <pre id="pre-code-outdev" class="code-pre"><code class="language-java" id="code-outdev">Loading...</code></pre>
+        </div>
     </div>
 
-    <div class="code-container" style="margin-bottom: 10px;">
-        <h3 onclick="toggleCode('code-cell')" style="cursor:pointer; color: #2196F3; display: inline-block;">+ Cell.java</h3>
-        <pre id="pre-code-cell" style="display:none;"><code class="language-java" id="code-cell">Loading...</code></pre>
-    </div>
+    <h2>Problem analysis</h2>
+     
+    <h2>Test plans</h2> 
+    <p>Per le funzionalità di base della logica di dominio, si fa riferimento ai test implementati durante la fase precedente:</p>
+    <ul>
+        <li><a href="https://github.com/LZanaaa/ISS26/tree/main/progetti/ConwayLife/Sprint1/src/main/java/test" target="_blank">Repository GitHub - Test dello Sprint 1</a></li>
+    </ul>
 
-    <div class="code-container" style="margin-bottom: 10px;">
-        <h3 onclick="toggleCode('code-igrid')" style="cursor:pointer; color: #2196F3; display: inline-block;">+ IGrid.java</h3>
-        <pre id="pre-code-igrid" style="display:none;"><code class="language-java" id="code-igrid">Loading...</code></pre>
-    </div>
+    <h2>Project</h2> 
+     
+    <h2>Testing</h2> 
+     
+    <h2>Deployment</h2> 
 
-    <div class="code-container" style="margin-bottom: 10px;">
-        <h3 onclick="toggleCode('code-grid')" style="cursor:pointer; color: #2196F3; display: inline-block;">+ Grid.java</h3>
-        <pre id="pre-code-grid" style="display:none;"><code class="language-java" id="code-grid">Loading...</code></pre>
-    </div>
-
-    <div class="code-container" style="margin-bottom: 10px;">
-        <h3 onclick="toggleCode('code-lifeinterface')" style="cursor:pointer; color: #2196F3; display: inline-block;">+ LifeInterface.java</h3>
-        <pre id="pre-code-lifeinterface" style="display:none;"><code class="language-java" id="code-lifeinterface">Loading...</code></pre>
-    </div>
-
-    <div class="code-container" style="margin-bottom: 10px;">
-        <h3 onclick="toggleCode('code-life')" style="cursor:pointer; color: #2196F3; display: inline-block;">+ Life.java</h3>
-        <pre id="pre-code-life" style="display:none;"><code class="language-java" id="code-life">Loading...</code></pre>
-    </div>
-
-    <div class="code-container" style="margin-bottom: 10px;">
-        <h3 onclick="toggleCode('code-gamecontroller')" style="cursor:pointer; color: #2196F3; display: inline-block;">+ GameController.java</h3>
-        <pre id="pre-code-gamecontroller" style="display:none;"><code class="language-java" id="code-gamecontroller">Loading...</code></pre>
-    </div>
-
-    <div class="code-container" style="margin-bottom: 10px;">
-        <h3 onclick="toggleCode('code-lifecontroller')" style="cursor:pointer; color: #2196F3; display: inline-block;">+ LifeController.java</h3>
-        <pre id="pre-code-lifecontroller" style="display:none;"><code class="language-java" id="code-lifecontroller">Loading...</code></pre>
-    </div>
-
-    <div class="code-container" style="margin-bottom: 10px;">
-        <h3 onclick="toggleCode('code-outdev')" style="cursor:pointer; color: #2196F3; display: inline-block;">+ IOutDev.java</h3>
-        <pre id="pre-code-outdev" style="display:none;"><code class="language-java" id="code-outdev">Loading...</code></pre>
-    </div>
-</div>
-
- 
-
-
-<h2>Problem analysis</h2>
- 
-
-<h2>Test plans</h2> 
-
-
-<h2>Project</h2> 
- 
- 
-
-<h2>Testing</h2> 
- 
-
-<h2>Deployment</h2> 
-
- 
-<h2>Maintenance</h2> 
- 
-<!-- USEFUL
-<table style="width:100%" border="1">
-<tr>
-<td style="width:50%">
-</td>
-<td></td>
-</tr>
-</table>
--->
-	      	
-<br/><br/> 	
+    <h2>Maintenance</h2> 
+     
+    <br/><br/> 	
 </div>      
 
-<div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
-By Luca Zanarini email: luca.zanarini2@studio.unibo.it, 
-<img src="./LZana.jpg" alt="foto" width="8%" height="8%">
-GIT repo: https://github.com/LZanaaa/ISS26
+<div class="footer">
+    By Luca Zanarini email: luca.zanarini2@studio.unibo.it, 
+    <img src="./LZana.jpg" alt="foto" width="8%" height="8%">
+    GIT repo: <a href="https://github.com/LZanaaa/ISS26" style="color:white">https://github.com/LZanaaa/ISS26</a>
 </div> 
 </body>
 </html>

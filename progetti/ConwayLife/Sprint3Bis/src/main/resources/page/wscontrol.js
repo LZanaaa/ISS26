@@ -29,7 +29,7 @@ function initWS() {
 /*3*/socketToGui.onmessage = (event) => {
 		console.log("initWS | onmessage:", event.data);
 
-		// --- NUOVA GESTIONE DEI RUOLI (SPRINT 3) ---
+		
 		if (event.data === "ROLE:OWNER") {
 			document.getElementById("controlsArea").style.display = "block";
 			document.getElementById("observerMsg").style.display = "none";

@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="../css/mystyle.css">
+    <script type="text/javascript" src="../scripts/update.js"></script>
+    <title>ConwayLife_Sprint3</title>
+</head>
+
+<body>
+    <div id="top">
+        <h1>ConwayLife Sprint 3: Web GUI e Architettura Distribuita</h1>
+    </div>
+
+    <div class="body">
+
+        <h2>Introduction</h2>
+        <b>Goal</b>: Evolvere il <a
+            href='https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#chapter.6'>GAME OF LIFE DI CONWAY</a>
+        passando da un'interfaccia locale (Swing) a un'<b>interfaccia Web multi-utente</b> basata su architettura
+        distribuita, soddisfacendo i requisiti di deployment e di separazione dei compiti.
+
+        <h2>Requirements</h2>
+        <ol>
+            <li>Dotare il gioco <strong>Life</strong> di una pagina HTML come dispositivo di I/O.</li>
+            <li>La pagina deve costituire un <strong>componente esterno</strong> alla applicazione, seguendo
+                l'architettura riportata in <b>IoJavalinExt</b>.</li>
+            <li>Il gestore del gioco sarà l’utente che ha aperto per primo (<strong>Owner</strong>) la pagina HTML
+                collegata. Solo la pagina dell’Owner avrà i pulsanti di comando <span class="highlight">START / STOP /
+                    CLEAN / EXIT</span> attivi.</li>
+            <li>La pagina HTML deve essere <strong>aggiornata in modo automatico</strong> man mano che il gioco procede.
+            </li>
+            <li>Un utente non-owner che si collega mentre il gioco è in corso deve poter visualizzare correttamente lo
+                <strong>stato attuale della griglia</strong>.
+            </li>
+            <li>Il deployment del gioco deve avvenire mediante <strong>Docker</strong>.</li>
+        </ol>
+
+        <h2>Requirement analysis</h2>
+        <p>Per le classi ed i test della logica core del gioco Life, si fa riferimento allo <a
+                href="conway26JavaSwing_v0.html">Sprint 2</a>.</p>
+        
+        <p>L'interfaccia di Input/Output con il browser è la seguente:</p>
+        <pre><code>
+        public interface IOutDev {
+            public void display(String msg); // For HMI
+            public void displayCell(IGrid grid, int x, int y);
+            public void close();
+            public void displayGrid(IGrid grid);
+        }
+        </code></pre>
+            Il requisito impone una netta separazione tra il frontend ed il backend, il server Javalin viene portato all'esterno dell'applicazione, 
+            non andando piu ad estendere la libreria di output del gioco Life (IoutDev), permettendo cosi di scollegarlo dall'app.  
+            Per il collegamento con l'app viene utilizzata una classe intermedia che implementa IOutDev e collega il server Javalin al core di gioco.
+
+
+        <h2>Problem analysis</h2>
+
+        <div style="margin-bottom: 20px;">
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <img src="../img/IOJavalinExt.png" alt="Architettura IoJavalin Esterno"
+                    style="max-width: 70%; height: auto; border: 1px solid #ccc; box-shadow: 2px 2px 5px rgba(0,0,0,0.1);">
+                
+            </div>
+        </div>
+
+
+        <h2>Project</h2>
+
+        <h2>Test plans</h2>
+
+        <h2>Testing</h2>
+
+        <h2>Deployment</h2>
+        <p>
+            Per soddisfare il requisito di isolamento e portabilità (R6), l'intero ecosistema è configurato per il
+            rilascio tramite container.
+        </p>
+        <p>Passi di esecuzione:</p>
+        <ol>
+            <li>Creazione dell'immagine Docker (che include JRE e le due classi Main): <br>
+                <code>docker build -t conway-web-gui:1.0 .</code>
+            </li>
+            <li>Avvio del container esponendo la porta di comunicazione WebSocket e HTTP: <br>
+                <code>docker run -p 8080:8080 --rm conway-web-gui:1.0</code>
+            </li>
+            <li>Accesso al servizio distribuito tramite browser all'indirizzo: <a href="http://localhost:8080"
+                    target="_blank">http://localhost:8080</a>.</li>
+        </ol>
+
+        <h2>Maintenance</h2>
+        <p>La scomposizione tra View, Server di Routing e Motore di Calcolo garantisce una altissima manutenibilità.
+            Sostituire l'interfaccia HTML con un'App Mobile o sostituire Javalin con Spring Boot non richiederà la
+            ricompilazione del Core matematico del gioco.</p>
+
+        <br /><br />
+    </div>
+
+    <div style="background-color:rgba(86, 56, 253, 0.9); width:100%;text-align:center;color:white; padding: 10px;">
+        By Luca Zanarini | email: luca.zanarini2@studio.unibo.it <br>
+        GIT repo: <a href="https://github.com/LZanaaa/ISS26"
+            style="color: #ffcccb;">https://github.com/LZanaaa/ISS26</a>
+    </div>
+</body>
+
+</html>

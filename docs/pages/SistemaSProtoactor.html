@@ -36,11 +36,34 @@
                 modo persistente (websocket ndr.)</li>
         </ol>
 
+
+
         <h2>Requirement analysis</h2>
         <ul>
             <li><a href="https://raw.githubusercontent.com/LZanaaa/ISS26/refs/heads/main/progetti/SistemaSJavalin/lib/src/main/java/domain/MathUtils.java">MathUtils</a></li>
-            <li><a href="https://raw.githubusercontent.com/LZanaaa/ISS26/refs/heads/main/progetti/SistemaSJavalin/lib/src/main/java/javalin/SistemaSJavalin.java">SistemaSJavalin</a></li>
-        </ul>
+            L'interfaccia di comunicazione 
+            <pre><code>
+public interface IApplMessage {
+
+    public String msgId();
+    public String msgType();
+    public String msgSender();
+    public String msgReceiver();
+    public String msgContent();
+    public String msgNum();
+
+    public boolean isDispatch();
+    public boolean isRequest();
+    public boolean isReply();
+    public boolean isEvent();
+
+    public void setConn( Interaction conn );
+    public Interaction getConn(   );
+
+    public String toJsonString();
+}
+            </code></pre>
+        </ul>   
         
 
         

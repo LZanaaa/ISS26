@@ -2,13 +2,12 @@
 ## Dockerfile for  SistemaSJavalin
 ## ----------------------------------------------------------
 
-FROM eclipse-temurin:17.0.5_8-jre-focal AS builder
-## ADD extracts the tar
-ADD ../build/distributions/conway26GuiHtml-1.0.tar /
+FROM eclipse-temurin:17.0.5_8-jre-focal
+ADD ./build/distributions/conway26GuiHtml-1.0.tar /
 WORKDIR /conway26GuiHtml-1.0/bin
+# Non mettiamo il CMD qui, lo decidiamo nel Compose!
 
-## RUN apt-get update -y
-
+## RUN apt-get update -y	
 
 CMD ["bash", "conway26GuiHtml"]
 

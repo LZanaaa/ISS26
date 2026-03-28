@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'eclipse'
+}
+
+repositories {
+    mavenCentral()
+    //flatDir {   dirs './libs'    }
+    flatDir {   dirs '../unibolibs'    } 
+}
+
+dependencies {
+    /* JSON ********************************************************************************* */
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation group: 'org.json', name: 'json', version: '20180130'
+	
+	/* unibo ******************************* */
+	implementation name: 'uniboInterfaces'
+    implementation name: '2p301'
+    implementation name: 'unibo.basicomm23-1.0'
+
+    /* javalin ******************************* */
+	implementation 'io.javalin:javalin-bundle:6.1.3'
+}
+
+application {
+    mainClass = 'main.java.javalin.SistemaSJavalin'
+}

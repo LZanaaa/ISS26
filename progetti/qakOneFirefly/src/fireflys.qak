@@ -1,0 +1,81 @@
+System fireflys
+
+//Event flash : flash(V, T)
+//Dispatch flash : arg(X, Y, S) 
+Dispatch cellstate : cellstate(X, Y, COLOR) 
+
+Context ctxfirefly ip [ host= "localhost" port=8011 ]
+Context ctxgrid ip [host="127.0.0.1" port=8050 ]
+
+ExternalQActor griddisplay context ctxgrid
+
+QActor fireflys context ctxfirefly {
+	
+	//Valori iniziali casuali
+	[#
+        var X    = "1"
+        var Y	 = "1"
+    	var T_On  = 0L
+       	var T_Off = 0L
+    #]
+	
+	//Stato 0 spenta
+	State s0 initial{
+		println("name | viva") color green		
+		
+		
+	}
+	Goto spenta
+	
+	State spenta{
+		//println("$name | spenta") color cyan
+		[#
+	        T_On  = (100..700).random().toLong() 
+	        T_Off = (500..1000).random().toLong()
+    	#]
+    	forward griddisplay -m cellstate : cellstate($X, $Y, 0) 
+    	delayVar T_Off
+	}
+	Goto accesa 
+		
+	State accesa{
+		//println("$name | accesa") color yellow
+		//emit flash : flash($ID, $T_On)ù
+		 //forward mockobserver -m flash : arg($X, $Y, $T_On) griddisplay
+		 
+		 forward griddisplay -m cellstate : cellstate($X, $Y, 1) 
+		 delayVar T_On
+	}		
+	
+	Goto spenta
+	
+	
+}
+
+//QActor mockobserver context ctxfirefly {
+//    [# var FlashDur = 0L #]
+//
+//    State s0 initial {
+//        println("$name | In attesa") color cyan
+//    }
+//    Transition t0 
+//    	whenMsg flash -> handleFlash
+//    
+//    State handleFlash {
+//        onMsg( flash : arg(X, Y, T) ){
+//            [# 
+//            	var X = payloadArg(0) 
+//            	var Y = payloadArg(1) 
+//            	FlashDur = payloadArg(2).toLong() 
+//            #]
+//            println("$name v2 | Vedo luce da Lucciola") color yellow
+//        }
+//    }
+//    // Il mock "rimane acceso" simulando lo stesso tempo della lucciola
+//    Transition t1 whenTimeVar FlashDur -> fineFlash
+//    
+//    State fineFlash {
+//        println("$name | SPenta") color magenta
+//    }
+//    Goto s0 
+//}

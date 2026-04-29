@@ -1,0 +1,81 @@
+System sistemasqak 
+
+Dispatch eval : arg(V) // arg v --> payload messaggio
+Request evalr : argr(V)
+Reply evalreply : value(V) for evalr
+
+Context ctxsistemas ip [ host= "localhost" port=8011 ]
+
+/*
+ * Un servizio che valuta il valore di una funzione  --> servizio : programma con cui posso parlare
+ */ 
+
+
+QActor sistemas context ctxsistemas {
+	
+	[#
+		fun eval(x: Double): String{
+			val R = 3*x
+			return ""+R
+		}
+	
+	#]
+	
+	
+	State s0 initial {
+		println("$name | Wello Horld") color cyan		
+	}
+	
+	Transition t0
+		whenMsg eval -> handleEval
+		whenRequest evalr -> handleRequest
+	
+	State handleEval {
+		[# var R = "" #]
+		onMsg(eval: arg(V)){
+			
+			[# val V = payloadArg(0) #]
+			println("$name | valuto $V") color green
+			
+			[# R = eval(V.toDouble()) #]
+			println("$name | result = $R") color red	
+		}
+	}
+	
+	State handleRequest{
+		[# var R = ""#]
+		onMsg(evalr: argr(V)){
+			
+			[# val V = payloadArg(0) #]
+			println("$name | valutor $V") color green
+			
+			[# R = eval(V.toDouble()) #]
+			println("$name | resultr = $R") color red	
+		}
+		
+		replyTo evalr with evalreply : value($R)
+		println("$name | handlereply ends")
+	}
+		
+	
+}
+
+QActor callermock context ctxsistemas{
+	
+	State s0 initial{
+		println("$name | start ") color green
+		[# val V = 3.0 #]
+//		forward sistemas -m eval : arg($V)
+		request sistemas -m evalr : argr($V)
+	}
+	
+	Transition t0 
+		whenReply evalreply -> handleReply
+		
+	State handleReply{
+		onMsg(evalreply: value(X)){
+			[# val varStr = payloadArg(0) #]
+			println("$name | Risultato ricevuto: $varStr") color magenta
+		}
+	}
+}

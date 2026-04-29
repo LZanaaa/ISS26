@@ -29,21 +29,40 @@ class Fireflyfactory ( name: String, scope: CoroutineScope, isconfined: Boolean=
 	override fun getBody() : (ActorBasicFsm.() -> Unit){
 		//val interruptedStateTransitions = mutableListOf<Transition>()
 		//IF actor.withobj !== null val actor.withobj.name� = actor.withobj.method�ENDIF
+		 var NUM = 1  
 		return { //this:ActionBasciFsm
 				state("s0") { //this:State
 					action { //it:State
-						  clearlog("./logs/qakdemo26.log")  
-						 var NUM = 1  
-						createActorDynamically("firefly", "_$NUM", false)
-						 
-									NUM++
-									if (NUM == 100) System.exit(0)
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition( edgeName="goto",targetState="s0", cond=doswitch() )
+					 transition( edgeName="goto",targetState="createFirefly", cond=doswitch() )
+				}	 
+				state("createFirefly") { //this:State
+					action { //it:State
+						 val MyName = "firefly_$NUM"  
+						createActorDynamically("firefly", "_$NUM", false)
+						 NUM++  
+						//genTimer( actor, state )
+					}
+					//After Lenzi Aug2002
+					sysaction { //it:State
+					}	 	 
+					 transition( edgeName="goto",targetState="createFirefly", cond=doswitchGuarded({ NUM <= 3  
+					}) )
+					transition( edgeName="goto",targetState="stop", cond=doswitchGuarded({! ( NUM <= 3  
+					) }) )
+				}	 
+				state("stop") { //this:State
+					action { //it:State
+						CommUtils.outgreen("$name | Lucciole create")
+						//genTimer( actor, state )
+					}
+					//After Lenzi Aug2002
+					sysaction { //it:State
+					}	 	 
 				}	 
 			}
 		}

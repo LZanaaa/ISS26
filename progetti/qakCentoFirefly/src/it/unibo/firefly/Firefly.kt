@@ -30,7 +30,7 @@ class Firefly ( name: String, scope: CoroutineScope, isconfined: Boolean=false, 
 		//val interruptedStateTransitions = mutableListOf<Transition>()
 		//IF actor.withobj !== null val actor.withobj.name� = actor.withobj.method�ENDIF
 			
-				var LINELEN = 10		
+				var LINELEN = 20		
 				val id = name.split('_').last().toInt()		
 		        var X    = id % LINELEN
 		        var Y	 = id / LINELEN
@@ -39,7 +39,7 @@ class Firefly ( name: String, scope: CoroutineScope, isconfined: Boolean=false, 
 		return { //this:ActionBasciFsm
 				state("s0") { //this:State
 					action { //it:State
-						CommUtils.outgreen("name | ($X ; $Y) viva")
+						CommUtils.outgreen("name | viva")
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
@@ -50,28 +50,27 @@ class Firefly ( name: String, scope: CoroutineScope, isconfined: Boolean=false, 
 				state("spenta") { //this:State
 					action { //it:State
 						
-							        T_On  = (600..700).random().toLong() 
+							        T_On  = (100..700).random().toLong() 
 							        T_Off = (500..1000).random().toLong()
+						forward("cellstate", "cellstate($X,$Y,0)" ,"griddisplay" ) 
+						delay(T_Off)
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
 					sysaction { //it:State
-				 	 		stateTimer = TimerActor("timer_spenta", 
-				 	 					  scope, context!!, "local_tout_"+name+"_spenta", T_Off )  //OCT2023
 					}	 	 
-					 transition(edgeName="t00",targetState="accesa",cond=whenTimeout("local_tout_"+name+"_spenta"))   
+					 transition( edgeName="goto",targetState="accesa", cond=doswitch() )
 				}	 
 				state("accesa") { //this:State
 					action { //it:State
-						forward("flash", "arg($X,$Y,$T_On)" ,"mockobserver" ) 
+						forward("cellstate", "cellstate($X,$Y,1)" ,"griddisplay" ) 
+						delay(T_On)
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
 					sysaction { //it:State
-				 	 		stateTimer = TimerActor("timer_accesa", 
-				 	 					  scope, context!!, "local_tout_"+name+"_accesa", T_On )  //OCT2023
 					}	 	 
-					 transition(edgeName="t11",targetState="spenta",cond=whenTimeout("local_tout_"+name+"_accesa"))   
+					 transition( edgeName="goto",targetState="spenta", cond=doswitch() )
 				}	 
 			}
 		}

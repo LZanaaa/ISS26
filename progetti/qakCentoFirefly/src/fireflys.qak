@@ -21,14 +21,17 @@ QActor fireflyfactory context ctxfirefly {
 	State createFirefly {
 		[# val MyName = "firefly_$NUM" #]
 		create firefly _"$NUM"
-		[# 
-			if(NUM == 400){ while(true){}} 
-			else NUM++ 
-		#]
+		
+		[# NUM++ #]
+
 	}
 	
+	Goto createFirefly if [# NUM <= 3 #] else stop
 	
-	Goto createFirefly
+	State stop{
+		println("$name | Lucciole create") color green
+		//do nothing
+	}
 }
 
 QActor firefly context ctxfirefly dynamicOnly{

@@ -28,6 +28,7 @@ with Diagram('fireflysArch', show=False, outformat='png', graph_attr=graphattr) 
      with Cluster('ctxfirefly', graph_attr=nodeattr):
           fireflyfactory=Custom('fireflyfactory','./qakicons/symActorWithobjSmall.png')
           firefly=Custom('firefly','./qakicons/symActorDynamicWithobj.png')
-          mockobserver=Custom('mockobserver','./qakicons/symActorWithobjSmall.png')
-     firefly >> Edge(color='blue', style='solid',  decorate='true', label='<flash &nbsp; >',  fontcolor='blue') >> mockobserver
+     with Cluster('ctxgrid', graph_attr=nodeattr):
+          griddisplay=Custom('griddisplay(ext)','./qakicons/externalQActor.png')
+     firefly >> Edge(color='blue', style='solid',  decorate='true', label='<cellstate &nbsp; >',  fontcolor='blue') >> griddisplay
 diag

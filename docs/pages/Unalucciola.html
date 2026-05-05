@@ -30,17 +30,19 @@
 
         <!-- <div class="remark"> -->
         <ol>
-            <li>La lucciola deve accendersi per un tempo T poi spegnersi in modo ciclico.</li>
-            <li>Il sistema dev'essere basato su autori.</li>
-            <li>Gli attori devono poter notificare il comportamento della lucciola all'esterno</li>
+            <li>Definere un modello qak di un sistema firefly che simula il comportamento di una lucciola</li>
         </ol>
 
 
         <h2>Requirement analysis</h2>
         <p>
             Classi: 
-            <ul>
-                <li><b>Firefly:</b> lucciola, modellata come QActor in Qak. Ha due stati Accesa e Spenta. Gli stati sono definiti da una macchina a stati interna all'attore</li>
+            <ul>            
+                <li>La lucciola deve accendersi per un tempo T poi spegnersi in modo ciclico.</li>
+                <li>Il sistema dev'essere basato su autori.</li>
+                <li>Gli attori devono poter notificare il comportamento della lucciola all'esterno</li>
+                <li>La lucciola dev'essere modellata come QActor in Qak</li>
+                <li>Ha due stati: Accesa e Spenta, definiti da una macchina a stati interna all'attore</li>
             </ul>
         </p>
         
@@ -48,8 +50,32 @@
         <h2>Problem analysis</h2>
         <div>
             Il ciclo di accensione/spegnimento di una lucciola può essere modellato come lo stato di un actor che alterna tra “acceso”
-e “spento” a intervalli di tempo variabili.
-La ripetizione del ciclo di lampeggio è gestita da una transizione che torna allo stato “flash” dopo un certo tempo.
+            e “spento” a intervalli di tempo variabili.
+            <div>
+                <pre><code>State s0 initial{
+		println("name | viva") color green			
+	}
+	Goto spenta
+	
+	State spenta{
+		println("$name | spenta") color cyan
+		[#
+	        T_On  = (100..700).random().toLong() 
+	        T_Off = (500..1000).random().toLong()
+    	#]
+    	delayVar T_Off
+	}
+	Goto accesa
+		
+	State accesa{
+		println("$name | accesa") color yellow
+		delayVar T_On
+	}		
+	
+	Goto spenta
+                </code></pre>
+            </div>
+            La ripetizione del ciclo di lampeggio è gestita da una transizione che torna allo stato acceso dopo un certo tempo casuale.
         </div>
 
 

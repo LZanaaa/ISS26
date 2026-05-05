@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+
+    <link rel="stylesheet" type="text/css" href="../css/mystyle.css">
+    <!--
+    <script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+    <script type="text/javascript" src="../scripts/update.js"></script>
+
+</head>
+
+<title>Firefly Sync Sonar</title>
+</head>
+
+
+<body>
+    <div id="top">
+        <h1>Firefly Sync A + B</h1>
+    </div>
+
+    <div class="body">
+
+        <h2>Introduction</h2>
+        Definere un modello qak di un sistema firefly che simula il comportamento di 3 lucciole sincronizzate fra loro.
+
+        <h2>Requirements</h2>
+        <div>
+            Costruire il simulatore di un sistema costituito da 3 lucciole. Inizialemente, le lucciole lampeggiamo ciascuna con una
+            frequenza (costante) propria.
+            <ol type='A'>
+                <li>Dopo 10 secondi le lucciole devono lampeggiare in modo sincronizzato</li>
+                <li> Il sistema è dotato anche di un sonar . Quando il sonar rileva un ostacolo a una distanza minore di una distanzaprefissata DMIN, le lucciole devoono lampeggiare in modo sincronizzato. Quando la distanza dell’ostacolo(ri)supera DMIN, le lucciole tornano a lampeggiare in modo random. </li>
+            </ol>
+        </div>
+
+
+        <!-- <div class="remark"> -->
+        
+
+
+        <h2>Requirement analysis</h2>
+        <h3>A</h3>
+        <ul>
+            <li>Sistema a 3 attori che interagiscono via eventi <code>flash(ID)</code></li>
+            <li>La strategia di convergenza si basa sull'osservazione di una lucciola "master" da parte delle altre "observer". </li>
+            <li>Le lucciole "observer" sincronizzano il loro ciclo interno quando ricevono l'evento dalla lucciola "master", tramite lo stato <code>handleFlash</code>.</li>
+            <li>Questo sistema è di facile implementazione, seppur presenta un unico punto di fallimento (la dipendenza dalla lucciola "master").</li>
+        </ul>
+        <div>
+            <pre><code>
+    Event sonarData : sonarData( DISTANCE )
+            </code></pre>  
+        </div>
+        <h3>B</h3>
+        <div
+            <li>Il sonar è un attore che genera dati su una determinata distanza</li>
+            <li>Il sonar è modellato come un'entita <i>observable</i></li>
+                <div>
+                    <pre><code>
+        QActor sonar_mock context ctx_requirements {
+            State s0 initial {
+                // Emette una distanza d < DMIN
+                emit sonarData : sonarData( 50 ) 
+            }
+        }
+                    </code></pre>
+                </div>
+            <li>La lucciola è modellata come entità <i>observer</i> ed aggiorna il proprio ciclo interno in base al dato osservato</li>
+                <div>
+                    <pre><code>
+        QActor firefly_logic_check context ctx_requirements {
+            State random_mode initial { } 
+            Transition t0 whenEvent sonarData -> check
+            
+            State check {
+                onMsg( sonarData : sonarData(D) ) {
+                    [# val D = payloadArg(0).toInt() #]
+                    // Se d < DMIN, passa alla modalità sincrona
+                }
+            }
+            Goto sync_mode if [# D < 100 #] else random_mode
+
+            State sync_mode { }
+            Transition t1 whenEvent sonarData -> check
+        }
+                    </code></pre>
+                </div>
+        </div>
+
+
+        
+        
+
+        <h2>Problem analysis</h2>
+        <div>
+
+        </div>
+
+        <h2>Test plans</h2>
+        <div>
+            <a name="testing" href="https://github.com/LZanaaa/ISS26/tree/main/progetti/griddisplay">Griddisplay</a>            
+        </div>
+
+
+        <h2>Project</h2>
+
+        
+        <h2>Testing</h2>
+
+
+        <h2>Deployment</h2>
+
+
+        <h2>Maintenance</h2>
+
+
+    </div>
+
+    <div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
+        By Luca Zanarini email: luca.zanarini2@studio.unibo.it,
+        <img src="./LZana.ISS2026jpg" alt="foto" width="8%" height="8%">
+        GIT repo: https://github.com/LZanaaa/ISS26
+    </div>
+</body>
+
+</html>

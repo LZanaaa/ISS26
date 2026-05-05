@@ -1,0 +1,75 @@
+System fireflysync
+
+Event flash : flash(ID)
+
+Context ctxfireflysync ip [ host= "localhost" port=8011 ]
+Context ctxgrid ip [host="127.0.0.1" port=8050 ]
+
+ExternalQActor griddisplay context ctxgrid
+
+QActor fireflyfactory context ctxfireflysync {
+	[# var NUM = 1 #] 
+	
+	State s0 initial {
+		println("$name | Inizio creazione lucciole") color green
+	}
+	Goto createFirefly
+	
+	State createFirefly {
+		create firefly _"$NUM"
+		[# NUM++ #]
+	}
+	Goto createFirefly if [# NUM <= 3 #] else stop
+	
+	State stop {
+		println("$name | 3 Lucciole create") color green
+	}
+}
+
+QActor firefly context ctxfireflysync dynamicOnly {
+	[#	
+		var id = 0
+    	var T_On  = 1000L
+       	var T_Off = 2000L // Periodo base differente per testare la sincronia
+    #]
+    
+    State s0 initial {
+    	[# 
+    		id = name.split('_').last().toInt() 
+
+    		T_Off = (1500..3000).random().toLong() 
+    	#]
+    	println("$name | ID=$id, T_Off=$T_Off") color cyan
+    }
+    Goto spenta
+    
+    State spenta {
+    	// Lucciola spenta
+    }
+    
+    Transition t0 
+    	whenTimeVar T_Off -> accesa
+		whenEvent flash  -> handleFlash //Se riceve flash lo gestisce
+    
+    State accesa {
+    	//println("$name | ACCESO") color yellow
+    	[# emit("flash", "flash($id)") #]
+    	println("$name | ACCESO") color yellow
+    }
+    
+    Transition t1 
+    	whenTimeVar T_On -> spenta
+    
+    State handleFlash {
+    	onMsg( flash : flash(ID) ) {
+    		[# val SenderID = payloadArg(0).toInt() #]
+    		// Se ho id> master 
+    		if[# id > 1 && SenderID == 1 #]{
+    			println("$name | Sincronizzo con lucciola master") color magenta
+    			// cambio stato
+    		}
+    	}
+    }
+    // Se il messaggio era del master vado in acceso
+    Goto accesa if [# id > 1 #] else spenta 
+}

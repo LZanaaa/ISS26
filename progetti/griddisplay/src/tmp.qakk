@@ -1,0 +1,110 @@
+System fireflysync_observer
+
+// Messaggio per l'osservazione (come da demo del prof)
+Dispatch sonarInfo : changed(SOURCE, TERM)
+Event flash : flash(ID)
+
+Context ctxfireflysync ip [host="localhost" port=8011]
+
+/* * SONAR: Il "Worker" (Observable)
+ */
+QActor sonar context ctxfireflysync {
+	[# var D = 150 #]
+	State s0 initial {
+		println("$name | Sonar pronto") color yellow
+	}
+	Goto work
+	
+	State work {
+		// Simula il cambio di distanza: alterna tra 50 e 150 ogni 10 secondi
+		[# D = if( Math.random() > 0.5 ) 50 else 150 #]
+		
+		// Come nel demo: updateResource notifica gli osservatori registrati
+		updateResource [# "$name, $D" #]
+		println("$name | updateResource distanza: $D") color yellow
+	}
+	Transition t0 whenTime 10000 -> work
+}
+
+/* * FIREFLY: L'Observer (Master) e le Followers
+ */
+QActor firefly context ctxfireflysync dynamicOnly {
+	[#	
+		var id = 0
+		var DMIN = 100
+		var bSync = false  // Stato abilitato dal Sonar
+    	var T_On  = 800L
+       	var T_Off = 2000L 
+    #]
+    
+    State s0 initial {
+    	[# 
+    		id = name.split('_').last().toInt() 
+    		T_Off = (1000..3000).random().toLong() 
+    	#]
+    	// Se sono il Master, osservo il sonar (Pattern Observer)
+    	if [# id == 1 #] {
+    		observeResource sonar msgid sonarInfo
+    		println("$name | Master in ascolto del Sonar") color magenta
+    	}
+    }
+    Goto spenta
+    
+    State spenta { }
+    Transition t0 
+    	whenTimeVar T_Off -> accesa
+    	whenMsg sonarInfo -> handleSonar  // Solo il Master riceve questo
+		whenEvent flash   -> handleFlash  // Le Followers ricevono questo
+    
+    State handleSonar {
+    	onMsg( sonarInfo : changed(SOURCE, DATA) ) {
+    		[# 
+    			// DATA è la stringa "$name, $D" passata da updateResource
+    			val RawData = payloadArg(1)
+    			val Distance = RawData.split(',')[1].trim().toInt()
+    			bSync = (Distance < DMIN)
+    		#]
+    		println("$name | Modalità Sincro: $bSync (D: $Distance)") color magenta
+    	}
+    }
+    Goto spenta
+    
+    State accesa {
+    	if [# id == 1 && bSync #] {
+    		[# emit("flash", "flash($id)") #]
+    		println("$name | MASTER FLASH!") color red
+    	} else {
+    		println("$name | ACCESO (indipendente)") color yellow
+    	}
+    }
+    Transition t1 whenTimeVar T_On -> spenta
+    
+    State handleFlash {
+    	onMsg( flash : flash(MID) ) {
+    		[# 
+    			val SenderID = payloadArg(0).toInt()
+    			val MustSync = (id > 1 && SenderID == 1)
+    		#]
+    		if [# MustSync #] {
+    			println("$name | Sincronizzazione forzata!") color cyan
+    		}
+    	}
+    }
+    // Se dovevo sincronizzare, vado in accesa, altrimenti torno a dormire
+    Goto accesa if [# id > 1 #] else spenta 
+}
+
+/* * FACTORY
+ */
+QActor fireflyfactory context ctxfireflysync {
+	[# var NUM = 1 #] 
+	State s0 initial { }
+	Goto createFirefly
+	State createFirefly {
+		[# val MyName = "firefly_$NUM" #]
+		create firefly MyName
+		[# NUM++ #]
+	}
+	Goto createFirefly if [# NUM <= 3 #] else stop
+	State stop { println("Sistema avviato") }
+}

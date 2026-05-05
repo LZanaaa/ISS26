@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+
+    <link rel="stylesheet" type="text/css" href="../css/mystyle.css">
+    <!--
+    <script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+    <script type="text/javascript" src="../scripts/update.js"></script>
+
+</head>
+
+<title>Firefly Sync</title>
+</head>
+
+
+<body>
+    <div id="top">
+        <h1>Firefly Sync A</h1>
+    </div>
+
+    <div class="body">
+
+        <h2>Introduction</h2>
+        Definere un modello qak di un sistema firefly che simula il comportamento di 3 lucciole sincronizzate fra loro.
+
+        <h2>Requirements</h2>
+        <div>
+            Costruire il simulatore di un sistema costituito da 3 lucciole. Inizialemente, le lucciole lampeggiamo ciascuna con una
+            frequenza (costante) propria.
+            <ul><li>Dopo 10 secondi le lucciole devono lampeggiare in modo sincronizzato</li></ul>
+        </div>
+
+
+        <!-- <div class="remark"> -->
+        
+
+
+        <h2>Requirement analysis</h2>
+        <ul>
+            <li>Sistema a 3 attori che interagiscono via eventi <code>flash(ID)</code></li>
+            <li>La strategia di convergenza si basa sull'osservazione di una lucciola "master" da parte delle altre "observer". </li>
+            <li>Le lucciole "observer" sincronizzano il loro ciclo interno quando ricevono l'evento dalla lucciola "master".</li>
+            <li>Questo sistema è di facile implementazione, seppur presenta un unico punto di fallimento (la dipendenza dalla lucciola "master").</li>
+        </ul>
+        </div>
+        
+
+        <h2>Problem analysis</h2>
+        <div>
+            <ul>
+                <li>Per il modello della lucciola si è riutilizzato il componente <a href="Unalucciola.html">Firefly</a></li>
+                <li>Il sistema è composto da 3 attori che interagiscono via eventi <code>flash:flash(ID)</code> su un bus comune</li>
+                <li>QUando la lucciola master (ID=1) lampeggia, emette l'evento <code>flash</code> che le altre lucciole (ID=2 e ID=3) utilizzano per aggiornare il loro ciclo interno</li>
+            </ul>
+        </div>
+
+
+        <h2>Test plans</h2>
+        <div>
+            <a name="testing" href="https://github.com/LZanaaa/ISS26/tree/main/progetti/griddisplay">Griddisplay</a>            
+        </div>
+
+
+        <h2>Project</h2>
+
+        
+        <h2>Testing</h2>
+
+
+        <h2>Deployment</h2>
+
+
+        <h2>Maintenance</h2>
+
+        <!-- USEFUL
+<table style="width:100%" border="1">
+<tr>
+<td style="width:50%">
+</td>
+<td></td>
+</tr>
+</table>
+-->
+
+        <br /><br />
+    </div>
+
+    <div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
+        By Luca Zanarini email: luca.zanarini2@studio.unibo.it,
+        <img src="./LZana.ISS2026jpg" alt="foto" width="8%" height="8%">
+        GIT repo: https://github.com/LZanaaa/ISS26
+    </div>
+</body>
+
+</html>

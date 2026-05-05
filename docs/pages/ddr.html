@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+
+    <link rel="stylesheet" type="text/css" href="../css/mystyle.css">
+    <!--
+    <script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+    <script type="text/javascript" src="../scripts/update.js"></script>
+
+</head>
+
+<title>Differential Drive Robot</title>
+</head>
+
+
+<body>
+    <div id="top">
+        <h1>Differential Drive Robot </h1>
+    </div>
+
+    <div class="body">
+
+        <h2>Introduction</h2>
+
+	
+        <h2>Requirements</h2>
+        <div>
+            <pre>
+Costruire un sistema software che comanda un Differential Drive Robot (DDR) in modo che, 
+partendo dalla posizione iniziale HOME, il robot si sposti lungo il perimetro di una stanza rettangolare vuota. 
+Il DDR si deve fermare quando tornato in HOME.
+
+Il DDR è anche sensibile ai dati rilevati da un Radar.
+Quando il Radar rileva un 'intruso' a una distanza minore di una distanza prefissata ``DMIN``:
+  
+  - se il DDR si sta muovendo , il DDR si ferma fino a che il Radar non rileva più un 'intruso' così vicino 
+  - se il DDR è fermo in HOME, il DDR ruota su sè stesso fino a che un 'intruso' così vicino scompare
+            </pre>
+        </div>
+
+
+
+        <h2>Requirement analysis</h2>
+        <div>
+            <ol>
+                <li>Il sistema deve essere rappresentato con un modello qak, il cui nome è <code>ddrsys</code></li>
+                <li>Il <code>ddrsys</code> dev'essere rappresentato da un attore qak (<code>ddr</code>), che ciclicamente passa dallo stato fermo a quello di movimento e viceversa</li>
+                    <pre><code>
+System ddrsys
+
+Context ctxddrsys ip [ host="localhost" port=8040 ]
+
+QActor ddr context ctxddrsys {
+    State s0 initial {
+        //Descrizione del comportamento dell'attore
+    } 
+}
+                    </code></pre>
+                <li>Il ddr dopo aver percorso il perimetro della stanza si ferma quando rileva di essere in HOME</li>
+                <li>Il ddr è sensibile ai dati rilevati da un <code>radar</code>, il <code>radar</code> è modellato come attore qak che <span style="color:lightgrey">a intervalli di tempo regolari</span> invia messaggi di segnalazione al <code>ddr</code>, se vi è o no un intruso a distanza minore di DMIN</li>
+                    <pre><code>
+System ddrsys
+
+Context ctxddrsys ip [ host="localhost" port=8040 ]
+
+QActor radar context ctxddrsys {
+    State s0 initial {
+        //Descrizione del comportamento del radar
+    } 
+}
+                    </code></pre>
+                <li>Quando il ddr riceve un messaggio di ostacolo e si trova in movimento, si ferma fino a che l'ostacolo non è più presente, ossia quando riceve dal radar che non vi sono ostacoli a meno di DMIN</li>
+                <li>Quando il ddr è fermo in HOME e riceve un messaggio di intruso, ruota su sè stesso fino a che l'intruso non è più presente</li>
+            </ol>
+        </div>
+        
+
+        <h2>Problem analysis</h2>
+
+
+        <h2>Test plans</h2>
+
+
+        <h2>Project</h2>
+
+        
+        <h2>Testing</h2>
+
+
+        <h2>Deployment</h2>
+
+
+        <h2>Maintenance</h2>
+
+        <!-- USEFUL
+<table style="width:100%" border="1">
+<tr>
+<td style="width:50%">
+</td>
+<td></td>
+</tr>
+</table>
+-->
+
+        <br /><br />
+    </div>
+
+    <div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
+        By Luca Zanarini email: luca.zanarini2@studio.unibo.it,
+        <img src="./LZana.ISS2026jpg" alt="foto" width="8%" height="8%">
+        GIT repo: https://github.com/LZanaaa/ISS26
+    </div>
+</body>
+
+</html>

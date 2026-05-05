@@ -1,0 +1,104 @@
+System fireflysync
+
+Event flash : flash(ID)
+Dispatch info : changed(SOURCE,TERM) "inviata senza forward (con updateResource)"
+
+Context ctxfireflysync ip [ host= "localhost" port=8011 ]
+Context ctxgrid ip [host="127.0.0.1" port=8050 ]
+	
+
+ExternalQActor griddisplay context ctxgrid
+
+QActor fireflyfactory context ctxfireflysync {
+	[# var NUM = 1 #] 
+	
+	State s0 initial {
+		println("$name | Inizio creazione lucciole") color green
+	}
+	Goto createFirefly
+	
+	State createFirefly {
+		create firefly _"$NUM"
+		[# NUM++ #]
+	}
+	Goto createFirefly if [# NUM <= 3 #] else stop
+	
+	State stop {
+		println("$name | 3 Lucciole create") color green
+	}
+}
+
+QActor firefly context ctxfireflysync dynamicOnly {
+	[#	
+		var id = 0
+    	var T_On  = 150L
+       	var T_Off = 1000L 
+       	var bSync = false
+    #]
+    
+    State s0 initial {
+    	[# 
+    		id = name.split('_').last().toInt() 
+
+    		T_Off = (1000..2000).random().toLong() 
+    	#]
+    	println("$name | ID=$id, T_Off=$T_Off") color cyan
+    	
+    	observeResource sonar msgid info
+    }
+    
+    Goto spenta
+    
+    State spenta {
+        [# if(!bSync) T_Off = (1000..4000).random().toLong() #]
+    }
+    Transition t0 
+        whenTimeVar T_Off -> accesa
+        whenMsg info -> handleinfo
+
+    State accesa {
+        println("$name | FLASH!") color yellow
+
+    }
+    Transition t1 
+        whenTimeVar T_On -> spenta
+        whenMsg info -> handleinfo
+    	
+   	State handleinfo {
+        onMsg( info : changed( SOURCE, TERM ) ){  
+            [# 
+
+                val distance = payloadArg(1).toInt()
+                bSync = (distance < 100)
+                
+                // Se dobbiamo sincronizzarci, usiamo tutti lo stesso tempo di attesa
+                if(bSync) T_Off = 2000L 
+            #]
+            println("$name | Update Sonar: dist=$distance, bSync=$bSync") color magenta
+        }
+    }
+
+    Goto accesa if [# bSync #] else spenta
+	
+}
+
+QActor sonar context ctxfireflysync{
+  State s0 initial{
+  	
+    [# var distance = 150 #]   
+    delay 5000 
+    println("$name | update distanza ${distance}") color green
+    [# logger.info(  "${currentState.stateName} updateResource: $name,hello_${distance}"  ) #]
+    
+    //Invio dopo un tot con 150
+    updateResource [# "$name, ${distance}" #]
+    [# distance = 50 #]
+    delay 5000
+    [# logger.info(  "${currentState.stateName} updateResource: $name,hello_${distance}"  ) #]
+    
+    println("$name | update distanza ${distance}") color green
+    updateResource [# "$name, ${distance}" #]
+  }
+  
+  Goto s0
+}

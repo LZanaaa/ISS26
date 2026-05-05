@@ -48,9 +48,7 @@ QActor firefly context ctxfirefly dynamicOnly{
 	
 	//Stato 0 spenta
 	State s0 initial{
-		println("name | viva") color green		
-		
-		
+		println("name | viva") color green			
 	}
 	Goto spenta
 	
@@ -74,8 +72,7 @@ QActor firefly context ctxfirefly dynamicOnly{
 		 delayVar T_On
 	}		
 	
-	Goto spenta
-	
+	Goto spenta	
 	
 }
 

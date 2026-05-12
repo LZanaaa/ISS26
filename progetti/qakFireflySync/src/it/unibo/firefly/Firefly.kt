@@ -30,7 +30,9 @@ class Firefly ( name: String, scope: CoroutineScope, isconfined: Boolean=false, 
 		//val interruptedStateTransitions = mutableListOf<Transition>()
 		//IF actor.withobj !== null val actor.withobj.name� = actor.withobj.method�ENDIF
 			
-				var id = 0
+				var id = name.split('_').last().toInt()		
+				var X    = id / 20
+		        var Y	 = id % 20
 		    	var T_On  = 150L
 		       	var T_Off = 1000L 
 		       	var bSync = false
@@ -53,6 +55,7 @@ class Firefly ( name: String, scope: CoroutineScope, isconfined: Boolean=false, 
 				state("spenta") { //this:State
 					action { //it:State
 						 if(!bSync) T_Off = (1000..4000).random().toLong()  
+						forward("cellstate", "cellstate($X,$Y,0)" ,"griddisplay" ) 
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
@@ -66,6 +69,7 @@ class Firefly ( name: String, scope: CoroutineScope, isconfined: Boolean=false, 
 				state("accesa") { //this:State
 					action { //it:State
 						CommUtils.outyellow("$name | FLASH!")
+						forward("cellstate", "cellstate($X,$Y,1)" ,"griddisplay" ) 
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
@@ -85,7 +89,6 @@ class Firefly ( name: String, scope: CoroutineScope, isconfined: Boolean=false, 
 								                val distance = payloadArg(1).toInt()
 								                bSync = (distance < 100)
 								                
-								                // Se dobbiamo sincronizzarci, usiamo tutti lo stesso tempo di attesa
 								                if(bSync) T_Off = 2000L 
 								CommUtils.outmagenta("$name | Update Sonar: dist=$distance, bSync=$bSync")
 						}

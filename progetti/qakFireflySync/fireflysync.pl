@@ -3,6 +3,7 @@
 %====================================================================================
 event( flash, flash(ID) ).
 dispatch( info, changed(SOURCE,TERM) ). %inviata senza forward (con updateResource)
+dispatch( cellstate, cellstate(X,Y,S) ).
 %====================================================================================
 context(ctxfireflysync, "localhost",  "TCP", "8011").
 context(ctxgrid, "127.0.0.1",  "TCP", "8050").

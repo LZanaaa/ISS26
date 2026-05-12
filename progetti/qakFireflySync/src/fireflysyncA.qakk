@@ -1,6 +1,7 @@
 System fireflysync
 
 Event flash : flash(ID)
+Dispatch cellstate : cellstate(X, Y, S) 
 
 Context ctxfireflysync ip [ host= "localhost" port=8011 ]
 Context ctxgrid ip [host="127.0.0.1" port=8050 ]
@@ -28,7 +29,9 @@ QActor fireflyfactory context ctxfireflysync {
 
 QActor firefly context ctxfireflysync dynamicOnly {
 	[#	
-		var id = 0
+		var id = name.split('_').last().toInt()		
+		var X    = id / LINELEN
+        var Y	 = id % LINELEN
     	var T_On  = 1000L
        	var T_Off = 2000L // Periodo base differente per testare la sincronia
     #]
@@ -44,6 +47,7 @@ QActor firefly context ctxfireflysync dynamicOnly {
     Goto spenta
     
     State spenta {
+    	forward griddisplay -m cellstate : cellstate($X, $Y, 0) 
     	// Lucciola spenta
     }
     
@@ -55,6 +59,7 @@ QActor firefly context ctxfireflysync dynamicOnly {
     	//println("$name | ACCESO") color yellow
     	[# emit("flash", "flash($id)") #]
     	println("$name | ACCESO") color yellow
+    	forward griddisplay -m cellstate : cellstate($X, $Y, 1)
     }
     
     Transition t1 

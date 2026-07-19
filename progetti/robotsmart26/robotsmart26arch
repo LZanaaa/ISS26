@@ -1,0 +1,27 @@
+digraph robotsmart26Arch {
+	graph [fontcolor="#2D3436" fontname="Sans-Serif" fontsize=22 label=robotsmart26Arch nodesep=0.60 pad=2.0 rankdir=LR ranksep=0.75 splines=ortho]
+	node [fixedsize=true fontcolor="#2D3436" fontname="Sans-Serif" fontsize=13 height=1.4 imagescale=true labelloc=b shape=box style=rounded width=1.4]
+	edge [color="#7B8894"]
+	c85d0b79ffb543fab71a1fcc597c9430 -> c85d0b79ffb543fab71a1fcc597c9430 [label=sonardata color=red decorate=true dir=forward fontcolor=red fontname="Sans-Serif" fontsize=13 style=dotted]
+	c85d0b79ffb543fab71a1fcc597c9430 -> c85d0b79ffb543fab71a1fcc597c9430 [label=vrinfo color=red decorate=true dir=forward fontcolor=red fontname="Sans-Serif" fontsize=13 style=dotted]
+	c85d0b79ffb543fab71a1fcc597c9430 -> e5148562fa9843b1afc47237766a29f5 [label=sonaralarm color=red decorate=true dir=forward fontcolor=red fontname="Sans-Serif" fontsize=13 style=dotted]
+	e5148562fa9843b1afc47237766a29f5 -> "20c7023bd9954c5c888aa0a40ddc3806" [label=alarm color=darkgreen decorate=true dir=forward fontcolor=darkgreen fontname="Sans-Serif" fontsize=13 style=dotted]
+	c3512fb31eb8492e9418931ee29e0591 -> "20c7023bd9954c5c888aa0a40ddc3806" [label=<doplan<font color="darkgreen"> doplandone doplanfailed</font> &nbsp; > color=magenta decorate=true dir=forward fontcolor=magenta fontname="Sans-Serif" fontsize=13 style=solid]
+	"20c7023bd9954c5c888aa0a40ddc3806" -> c85d0b79ffb543fab71a1fcc597c9430 [label=<step<font color="darkgreen"> stepdone stepfailed</font> &nbsp; > color=magenta decorate=true dir=forward fontcolor=magenta fontname="Sans-Serif" fontsize=13 style=solid]
+	c85d0b79ffb543fab71a1fcc597c9430 -> "20c7023bd9954c5c888aa0a40ddc3806" [label=<doplan<font color="darkgreen"> doplandone doplanfailed</font> &nbsp; > color=magenta decorate=true dir=forward fontcolor=magenta fontname="Sans-Serif" fontsize=13 style=solid]
+	c3512fb31eb8492e9418931ee29e0591 -> c85d0b79ffb543fab71a1fcc597c9430 [label=<step<font color="darkgreen"> stepdone stepfailed</font> &nbsp; tuneAtHome<font color="darkgreen"> tuneDone</font> &nbsp; getrobotstate<font color="darkgreen"> robotstate</font> &nbsp; getenvmap<font color="darkgreen"> envmap</font> &nbsp; setdirection<font color="darkgreen"> setdirectiondone</font> &nbsp; > color=magenta decorate=true dir=forward fontcolor=magenta fontname="Sans-Serif" fontsize=13 style=solid]
+	"20c7023bd9954c5c888aa0a40ddc3806" -> "20c7023bd9954c5c888aa0a40ddc3806" [label=<nomoremove &nbsp; nextmove &nbsp; > color=blue decorate=true dir=forward fontcolor=blue fontname="Sans-Serif" fontsize=13 style=solid]
+	"20c7023bd9954c5c888aa0a40ddc3806" -> c85d0b79ffb543fab71a1fcc597c9430 [label=<move &nbsp; > color=blue decorate=true dir=forward fontcolor=blue fontname="Sans-Serif" fontsize=13 style=solid]
+	c85d0b79ffb543fab71a1fcc597c9430 -> c3512fb31eb8492e9418931ee29e0591 [label=<partnerstarted &nbsp; > color=blue decorate=true dir=forward fontcolor=blue fontname="Sans-Serif" fontsize=13 style=solid]
+	c3512fb31eb8492e9418931ee29e0591 -> c85d0b79ffb543fab71a1fcc597c9430 [label=<move &nbsp; setrobotstate &nbsp; > color=blue decorate=true dir=forward fontcolor=blue fontname="Sans-Serif" fontsize=13 style=solid]
+	subgraph cluster_env {
+		graph [bgcolor="#E5F5FD" fontname="Sans-Serif" fontsize=12 label=env labeljust=l pencolor="#AEB6BE" rankdir=LR shape=box style=rounded]
+		e5148562fa9843b1afc47237766a29f5 [label="" height=1.9 image="./qakicons/system.png" shape=none]
+		subgraph cluster_ctxrobotsmart {
+			graph [bgcolor=lightyellow fontname="Sans-Serif" fontsize=22 label=ctxrobotsmart labeljust=l pencolor="#AEB6BE" rankdir=LR shape=box style=rounded]
+			c3512fb31eb8492e9418931ee29e0591 [label=robotsmart height=1.9 image="./qakicons/symActorWithobjSmall.png" shape=none]
+			c85d0b79ffb543fab71a1fcc597c9430 [label=robotmnemo height=1.9 image="./qakicons/symActorWithobjSmall.png" shape=none]
+			"20c7023bd9954c5c888aa0a40ddc3806" [label=planexec height=1.9 image="./qakicons/symActorWithobjSmall.png" shape=none]
+		}
+	}
+}

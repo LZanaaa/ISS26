@@ -60,7 +60,9 @@ dependencies {
     implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: "$kotlinVersion"   //, ext: 'pom'
     // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm
     implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core-jvm', version: "$kotlinVersion"
-
+	
+	/* javalin ******************************* */
+    implementation 'io.javalin:javalin:5.3.2'
 
 	//HTTP
     implementation 'org.apache.httpcomponents:httpclient:4.5'

@@ -30,21 +30,19 @@ class Firefly ( name: String, scope: CoroutineScope, isconfined: Boolean=false, 
 		//val interruptedStateTransitions = mutableListOf<Transition>()
 		//IF actor.withobj !== null val actor.withobj.name� = actor.withobj.method�ENDIF
 			
-				var id = name.split('_').last().toInt()		
-				var X    = id / 20
+				var id = name.split('_').last().toInt() 
+				var X    = id / 20 //20 è la lunghezza della linea della griglia
 		        var Y	 = id % 20
-		    	var T_On  = 150L
-		       	var T_Off = 1000L 
-		       	var bSync = false
+		    	var T_On  = 1000L
+		       	var T_Off = 2000L // Periodo base differente per testare la sincronia
 		return { //this:ActionBasciFsm
 				state("s0") { //this:State
 					action { //it:State
 						 
 						    		id = name.split('_').last().toInt() 
 						
-						    		T_Off = (1000..2000).random().toLong() 
+						    		T_Off = (1500..3000).random().toLong() 
 						CommUtils.outcyan("$name | ID=$id, T_Off=$T_Off")
-						observeResource("localhost","8011","ctxfireflysync","sonar","info")
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
@@ -54,7 +52,6 @@ class Firefly ( name: String, scope: CoroutineScope, isconfined: Boolean=false, 
 				}	 
 				state("spenta") { //this:State
 					action { //it:State
-						 if(!bSync) T_Off = (1000..4000).random().toLong()  
 						forward("cellstate", "cellstate($X,$Y,0)" ,"griddisplay" ) 
 						//genTimer( actor, state )
 					}
@@ -64,12 +61,13 @@ class Firefly ( name: String, scope: CoroutineScope, isconfined: Boolean=false, 
 				 	 					  scope, context!!, "local_tout_"+name+"_spenta", T_Off )  //OCT2023
 					}	 	 
 					 transition(edgeName="t00",targetState="accesa",cond=whenTimeout("local_tout_"+name+"_spenta"))   
-					transition(edgeName="t01",targetState="handleinfo",cond=whenDispatch("info"))
+					transition(edgeName="t01",targetState="handleFlash",cond=whenEvent("flash"))
 				}	 
 				state("accesa") { //this:State
 					action { //it:State
-						CommUtils.outyellow("$name | FLASH!")
+						 emit("flash", "flash($id)")  
 						forward("cellstate", "cellstate($X,$Y,1)" ,"griddisplay" ) 
+						CommUtils.outyellow("$name | ACCESO")
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
@@ -78,28 +76,24 @@ class Firefly ( name: String, scope: CoroutineScope, isconfined: Boolean=false, 
 				 	 					  scope, context!!, "local_tout_"+name+"_accesa", T_On )  //OCT2023
 					}	 	 
 					 transition(edgeName="t12",targetState="spenta",cond=whenTimeout("local_tout_"+name+"_accesa"))   
-					transition(edgeName="t13",targetState="handleinfo",cond=whenDispatch("info"))
 				}	 
-				state("handleinfo") { //this:State
+				state("handleFlash") { //this:State
 					action { //it:State
-						if( checkMsgContent( Term.createTerm("changed(SOURCE,TERM)"), Term.createTerm("changed(SOURCE,TERM)"), 
+						if( checkMsgContent( Term.createTerm("flash(ID)"), Term.createTerm("flash(ID)"), 
 						                        currentMsg.msgContent()) ) { //set msgArgList
-								 
-								
-								                val distance = payloadArg(1).toInt()
-								                bSync = (distance < 100)
-								                
-								                if(bSync) T_Off = 2000L 
-								CommUtils.outmagenta("$name | Update Sonar: dist=$distance, bSync=$bSync")
+								 val SenderID = payloadArg(0).toInt()  
+								if(  id > 1 && SenderID == 1  
+								 ){CommUtils.outmagenta("$name | Sincronizzo con lucciola master")
+								}
 						}
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition( edgeName="goto",targetState="accesa", cond=doswitchGuarded({ bSync  
+					 transition( edgeName="goto",targetState="accesa", cond=doswitchGuarded({ id > 1  
 					}) )
-					transition( edgeName="goto",targetState="spenta", cond=doswitchGuarded({! ( bSync  
+					transition( edgeName="goto",targetState="spenta", cond=doswitchGuarded({! ( id > 1  
 					) }) )
 				}	 
 			}

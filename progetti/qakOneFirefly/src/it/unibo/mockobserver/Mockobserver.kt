@@ -29,7 +29,7 @@ class Mockobserver ( name: String, scope: CoroutineScope, isconfined: Boolean=fa
 	override fun getBody() : (ActorBasicFsm.() -> Unit){
 		//val interruptedStateTransitions = mutableListOf<Transition>()
 		//IF actor.withobj !== null val actor.withobj.name� = actor.withobj.method�ENDIF
-		 var FlashDur = 0L  
+		 var DurataRicevuta = 0L  
 		return { //this:ActionBasciFsm
 				state("s0") { //this:State
 					action { //it:State
@@ -39,24 +39,23 @@ class Mockobserver ( name: String, scope: CoroutineScope, isconfined: Boolean=fa
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t02",targetState="handleFlash",cond=whenDispatch("flash"))
+					 transition(edgeName="t02",targetState="handleFlash",cond=whenEvent("flash"))
 				}	 
 				state("handleFlash") { //this:State
 					action { //it:State
-						if( checkMsgContent( Term.createTerm("arg(X,Y,S)"), Term.createTerm("arg(X,Y,T)"), 
+						if( checkMsgContent( Term.createTerm("flash(V,DUR)"), Term.createTerm("flash(V,T)"), 
 						                        currentMsg.msgContent()) ) { //set msgArgList
 								 
-								            	var X = payloadArg(0) 
-								            	var Y = payloadArg(1) 
-								            	FlashDur = payloadArg(2).toLong() 
-								CommUtils.outyellow("$name v2 | Vedo luce da Lucciola")
+								                val IdLucciola = payloadArg(0)
+								                DurataRicevuta = payloadArg(1).toLong() 
+								CommUtils.outyellow("$name | Vedo luce da Lucciola")
 						}
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
 					sysaction { //it:State
 				 	 		stateTimer = TimerActor("timer_handleFlash", 
-				 	 					  scope, context!!, "local_tout_"+name+"_handleFlash", FlashDur )  //OCT2023
+				 	 					  scope, context!!, "local_tout_"+name+"_handleFlash", DurataRicevuta )  //OCT2023
 					}	 	 
 					 transition(edgeName="t13",targetState="fineFlash",cond=whenTimeout("local_tout_"+name+"_handleFlash"))   
 				}	 

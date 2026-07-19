@@ -1,0 +1,39 @@
+System ddrboundary
+
+Dispatch move : move(M) "M = l|r|a|d|h mosse aril ok"
+Request cmd : cmd(MOVE,T) "MOVE = w|s mosse aril asynch"
+Reply cmddone : cmddone(R) for cmd
+Reply cmdfailed : cmdfailed(T,CAUSE) for cmd
+Request step : step(TIME)
+Reply stepdone : stepdone(V) for step
+Reply stepfailed : stepfailed(DURATION, CAUSE) for step
+
+Context ctxboundary ip [host="localhost" port=8120]
+Context ctxrobotservice26 ip [host="127.0.0.1" port=8125
+ExternalQActor robotactor context ctxrobotservice26
+
+
+QActor boundaryworker context ctxboundary{
+		
+	
+	State s0 initial{
+		println("$name | Avvio ")
+	}
+	
+	Goto move
+	
+	State move{
+		println("$name | Avanzo")
+		request robotactor -m step:step(1000) //Da qui da correggere 
+	}
+	
+	
+	
+	State rotate{
+		
+	}
+	
+		
+}
+
+
